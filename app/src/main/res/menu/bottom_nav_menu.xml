@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 하단 바 아이콘 순서대로 -->
+    <item
+        android:id="@+id/navigation_stadium"
+        android:icon="@drawable/ic_stadium_black_24dp"
+        android:title="@string/title_stadium" />
+
+    <item
+        android:id="@+id/navigation_referee"
+        android:icon="@drawable/ic_referee_black_24dp"
+        android:title="@string/title_referee" />
+
+    <item
+        android:id="@+id/navigation_matching"
+        android:icon="@drawable/ic_matching_black_24dp"
+        android:title="@string/title_matching" />
+
+    <item
+        android:id="@+id/navigation_community"
+        android:icon="@drawable/ic_community_black_24dp"
+        android:title="@string/title_community" />
+
+    <item
+        android:id="@+id/navigation_mypage"
+        android:icon="@drawable/ic_mypage_black_24dp"
+        android:title="@string/title_mypage" />
+
+</menu>

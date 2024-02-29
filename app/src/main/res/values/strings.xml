@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Kick_off_app</string>
+    <string name="title_stadium">Stadium</string>
+    <string name="title_referee">Referee</string>
+    <string name="title_matching">Matching</string>
+    <string name="title_community">Community</string>
+    <string name="title_mypage">MyPage</string>
+</resources>

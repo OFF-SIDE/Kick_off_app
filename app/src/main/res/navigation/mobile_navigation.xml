@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_stadium">
+
+    <fragment
+        android:id="@+id/navigation_stadium"
+        android:name="com.test.kick_off_app.ui.main.stadium.StadiumFragment"
+        android:label="@string/title_stadium"
+        tools:layout="@layout/fragment_stadium" >
+        <action
+            android:id="@+id/action_navigation_stadium_to_navigation_location"
+            app:destination="@id/navigation_location" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_referee"
+        android:name="com.test.kick_off_app.ui.main.referee.RefereeFragment"
+        android:label="@string/title_referee"
+        tools:layout="@layout/fragment_referee" />
+
+    <fragment
+        android:id="@+id/navigation_matching"
+        android:name="com.test.kick_off_app.ui.main.matching.MatchingFragment"
+        android:label="@string/title_matching"
+        tools:layout="@layout/fragment_matching" />
+
+    <fragment
+        android:id="@+id/navigation_community"
+        android:name="com.test.kick_off_app.ui.main.community.CommunityFragment"
+        android:label="@string/title_community"
+        tools:layout="@layout/fragment_community" />
+
+    <fragment
+        android:id="@+id/navigation_mypage"
+        android:name="com.test.kick_off_app.ui.main.mypage.MyPageFragment"
+        android:label="@string/title_mypage"
+        tools:layout="@layout/fragment_mypage" />
+
+    <fragment
+        android:id="@+id/navigation_location"
+        android:name="com.test.kick_off_app.ui.location.LocationFragment"
+        android:label="@string/title_mypage"
+        tools:layout="@layout/fragment_location" />
+
+
+</navigation>

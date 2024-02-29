@@ -1,0 +1,11 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="rv_stadium_height">102dp</dimen>
+    <dimen name="rv_stadium_image_width">106dp</dimen>
+    <dimen name="rv_stadium_image_height">77dp</dimen>
+    <dimen name="rv_stadium_image_left_margin">22dp</dimen>
+    <dimen name="rv_stadium_text_">77dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+</resources>
