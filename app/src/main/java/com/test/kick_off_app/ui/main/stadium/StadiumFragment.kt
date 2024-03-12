@@ -2,19 +2,19 @@ package com.test.kick_off_app.ui.main.stadium
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.test.kick_off_app.R
 import com.test.kick_off_app.StadiumActivity
-import com.test.kick_off_app.data.StadiumInfo
+import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.databinding.FragmentStadiumBinding
-import com.test.kick_off_app.ui.location.LocationFragment
 
 
 class StadiumFragment : Fragment() {
@@ -73,6 +73,7 @@ class StadiumFragment : Fragment() {
         //view.findViewById(R.id.rv_stadium)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
+        // rv adapter
         stadiumAdapter = StadiumAdapter { stadiumId ->
             val intent = Intent(requireActivity(), StadiumActivity::class.java)
             intent.putExtra("stadiumId", stadiumId)
@@ -80,66 +81,33 @@ class StadiumFragment : Fragment() {
         }
         recyclerView.adapter = stadiumAdapter
 
-        stadiumAdapter.setList(tempStadium())
-        stadiumAdapter.notifyDataSetChanged()
+        // get response from api
+        stadiumViewModel.getStadium("마포구", "축구장")
 
-        val button = binding.locationBtn
-        button.setOnClickListener {
-            //showLocationFragment()
-            binding.locationBtn.setOnClickListener {
-                val navController = Navigation.findNavController(view)
-                navController.navigate(
-                    R.id.action_navigation_stadium_to_navigation_location
-                )
-            }
+        stadiumViewModel.result.observe(viewLifecycleOwner){stadiums ->
+            stadiumAdapter.setList(stadiums)
+            stadiumAdapter.notifyDataSetChanged()
         }
-    }
 
-    fun tempStadium(): MutableList<StadiumInfo>{
-        val temp =  mutableListOf<StadiumInfo>()
-        temp.add(
-            StadiumInfo(1,  "마포축구장", "마포구 어딘가", 1000, 2, "https://picsum.photos/200")
-        )
-        temp.add(
-            StadiumInfo(2,  "강남축구장", "강남구 어딘가", 2000,5, "https://picsum.photos/200")
-        )
-        return temp
+        var swipe = view.findViewById<SwipeRefreshLayout>(R.id.swipe)
+        swipe.setOnRefreshListener {
+            stadiumViewModel.getStadium("마포구", "축구장")
+            if(stadiumViewModel.result.value==null){
+                Log.e("null!", "1111")
+            }else {
+                stadiumAdapter.setList(stadiumViewModel.result.value!!)
+                stadiumAdapter.notifyDataSetChanged()
+            }
+            swipe.isRefreshing = false
+        }
+
+        val locationBar = binding.constraintLocation
+        locationBar.setOnClickListener {
+
+        }
     }
 
     /*
-    private fun selectLocationDialog() {
-        val locations = arrayOf("마포구", "강남구", "종로구", /* ... */)
-
-        val recyclerView = RecyclerView(requireContext())
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = LocationAdapter {
-
-        }
-        recyclerView.adapter = adapter
-
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("지역구 선택")
-            .setView(recyclerView)
-            .setPositiveButton("확인") { _, _ ->
-                updateButtonText(adapter.getSelectedlocations())
-            }
-            .setNegativeButton("취소", null)
-            .create()
-
-        dialog.show()
-    }
-
-    private fun updateButtonText() {
-        val button = binding.locationBtn
-        if (selectedLocations.size > 0) {
-            val buttonText = "📍 " + selectedLocations.joinToString("/")
-            button.text = buttonText
-        } else {
-            button.text = "지역구 선택"
-        }
-    }
-
-     */
     fun showLocationFragment(){
         val fragmentLocation = LocationFragment()
 
@@ -149,6 +117,7 @@ class StadiumFragment : Fragment() {
             .commit()
 
     }
+     */
 
     override fun onDestroyView() {
         super.onDestroyView()

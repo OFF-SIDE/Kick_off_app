@@ -1,4 +1,4 @@
-package com.test.kick_off_app.ui.main.stadium
+package com.test.kick_off_app.ui.location
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,11 +10,11 @@ class LocationAdapter(private val onClick: (String) -> Unit) : RecyclerView.Adap
 
     inner class LocationViewHolder(private val binding: RvLocationBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(Location: String) {
-            binding.nameLocation.text = Location
+        fun bind(location: String) {
+            binding.textLocation.text = location
             binding.root.setOnClickListener {
                 // RecyclerView item click event
-                onClick(Location)
+                onClick(location)
             }
         }
     }
@@ -29,10 +29,6 @@ class LocationAdapter(private val onClick: (String) -> Unit) : RecyclerView.Adap
 
     override fun getItemCount(): Int {
         return Locations.size
-    }
-
-    fun getSelectedlocations(){
-
     }
 
     fun setLocations(LocationList: List<String>) {

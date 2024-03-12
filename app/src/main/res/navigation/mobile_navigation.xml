@@ -9,11 +9,7 @@
         android:id="@+id/navigation_stadium"
         android:name="com.test.kick_off_app.ui.main.stadium.StadiumFragment"
         android:label="@string/title_stadium"
-        tools:layout="@layout/fragment_stadium" >
-        <action
-            android:id="@+id/action_navigation_stadium_to_navigation_location"
-            app:destination="@id/navigation_location" />
-    </fragment>
+        tools:layout="@layout/fragment_stadium" />
 
     <fragment
         android:id="@+id/navigation_referee"
@@ -38,12 +34,6 @@
         android:name="com.test.kick_off_app.ui.main.mypage.MyPageFragment"
         android:label="@string/title_mypage"
         tools:layout="@layout/fragment_mypage" />
-
-    <fragment
-        android:id="@+id/navigation_location"
-        android:name="com.test.kick_off_app.ui.location.LocationFragment"
-        android:label="@string/title_mypage"
-        tools:layout="@layout/fragment_location" />
 
 
 </navigation>

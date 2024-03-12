@@ -3,22 +3,22 @@ package com.test.kick_off_app.ui.main.stadium
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.test.kick_off_app.data.StadiumInfo
+import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.databinding.RvStadiumBinding
 
 class StadiumAdapter(val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<StadiumAdapter.StadiumViewHolder>() {
-    private var items = listOf<StadiumInfo>()
+    private var items = listOf<Stadium>()
 
     inner class StadiumViewHolder(private val binding: RvStadiumBinding):
         RecyclerView.ViewHolder(binding.root){
-        fun bind(stadium: StadiumInfo){
+        fun bind(stadium: Stadium){
             binding.nameStadium.setText(stadium.name)
-            binding.addressStadium.setText(stadium.address)
-            binding.priceStadium.setText(stadium.price.toString())
-            binding.ratingStadium.setText(stadium.rating.toString())
+            binding.addressStadium.setText(stadium.location)
+            binding.priceStadium.setText(stadium.price)
+            binding.ratingStadium.setText(stadium.totalRating.toString())
             binding.root.setOnClickListener {
                 // rv click event
-                onClick(stadium.stadiumId)
+                onClick(stadium.id)
             }
         }
     }
@@ -35,7 +35,7 @@ class StadiumAdapter(val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<Stadium
         return items.size
     }
 
-    fun setList(Stadiums: List<StadiumInfo>) {
+    fun setList(Stadiums: List<Stadium>) {
         items = Stadiums
     }
 }

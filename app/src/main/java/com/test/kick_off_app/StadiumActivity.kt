@@ -15,5 +15,8 @@ class StadiumActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.textStadium.setText("StadiumActivity")
+        // 구장 상세 페이지
+
+
     }
 }
