@@ -5,7 +5,19 @@
     <dimen name="rv_stadium_height">102dp</dimen>
     <dimen name="rv_stadium_image_width">106dp</dimen>
     <dimen name="rv_stadium_image_height">77dp</dimen>
-    <dimen name="rv_stadium_image_left_margin">22dp</dimen>
+    <dimen name="rv_stadium_horizontal_margin">22dp</dimen>
+    <dimen name="rv_stadium_vertical_margin">12dp</dimen>
+    <dimen name="rv_stadium_name_top_margin">6dp</dimen>
     <dimen name="rv_stadium_text_">77dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="rv_stadium_icon_width">13dp</dimen>
+    <dimen name="rv_stadium_icon_height">13dp</dimen>
+    <dimen name="location_bar_height">38dp</dimen>
+    <dimen name="location_bar_radius">19dp</dimen>
+    <dimen name="location_height">205dp</dimen>
+    <dimen name="location_radius">19dp</dimen>
+    <dimen name="location_button_height">24dp</dimen>
+    <dimen name="location_button_radius">12dp</dimen>
+
+
 </resources>

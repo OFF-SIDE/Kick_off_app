@@ -3,19 +3,26 @@ package com.test.kick_off_app.ui.main.stadium
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.test.kick_off_app.R
 import com.test.kick_off_app.data.Stadium
-import com.test.kick_off_app.databinding.RvStadiumBinding
+import com.test.kick_off_app.databinding.RvStadiumItemBinding
 
 class StadiumAdapter(val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<StadiumAdapter.StadiumViewHolder>() {
     private var items = listOf<Stadium>()
 
-    inner class StadiumViewHolder(private val binding: RvStadiumBinding):
+    inner class StadiumViewHolder(private val binding: RvStadiumItemBinding):
         RecyclerView.ViewHolder(binding.root){
         fun bind(stadium: Stadium){
             binding.nameStadium.setText(stadium.name)
             binding.addressStadium.setText(stadium.location)
             binding.priceStadium.setText(stadium.price)
             binding.ratingStadium.setText(stadium.totalRating.toString())
+            Glide.with(binding.imageView)
+                .load(stadium.image)
+                .error(R.drawable.baseline_error_24)
+                .into(binding.imageView)
+
             binding.root.setOnClickListener {
                 // rv click event
                 onClick(stadium.id)
@@ -24,7 +31,7 @@ class StadiumAdapter(val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<Stadium
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StadiumViewHolder {
-        return StadiumViewHolder(RvStadiumBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return StadiumViewHolder(RvStadiumItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun onBindViewHolder(holder: StadiumViewHolder, position: Int) {

@@ -11,3 +11,15 @@ enum class LocationEnum {
 enum class StatusEnum {
     진행중, 예약중, 마감
 }
+
+fun getCategory(i: CategoryEnum): String{
+    return i.name
+}
+
+fun getLocation(i: LocationEnum): String{
+    return i.name
+}
+
+fun getStatus(i: StatusEnum) : String{
+    return i.name
+}

@@ -4,26 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="3dp"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button_location"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="31dp"
+            android:background="@drawable/border_location_button">
 
             <TextView
                 android:id="@+id/text_location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:breakStrategy="simple"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:hint="location"
                 android:maxLines="1"
-                android:textSize="20sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

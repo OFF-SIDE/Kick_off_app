@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/location_navigation"
+    app:startDestination="@id/locationBarFragment">
+
+    <fragment
+        android:id="@+id/locationBarFragment"
+        android:name="com.test.kick_off_app.ui.location.LocationBarFragment"
+        android:label="fragment_location_bar"
+        tools:layout="@layout/fragment_location_bar" >
+        <action
+            android:id="@+id/action_locationBarFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.test.kick_off_app.ui.location.LocationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location" >
+        <action
+            android:id="@+id/action_locationFragment_to_locationBarFragment"
+            app:destination="@id/locationBarFragment" />
+    </fragment>
+</navigation>
