@@ -19,5 +19,10 @@
     <dimen name="location_button_height">24dp</dimen>
     <dimen name="location_button_radius">12dp</dimen>
 
+    <dimen name="stadium_detail_icon_width">21dp</dimen>
+    <dimen name="stadium_detail_icon_height">21dp</dimen>
+
+    <dimen name="rv_stadium_info_height">54dp</dimen>
+
 
 </resources>

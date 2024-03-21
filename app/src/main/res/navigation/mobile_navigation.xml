@@ -9,7 +9,8 @@
         android:id="@+id/navigation_stadium"
         android:name="com.test.kick_off_app.ui.main.stadium.StadiumFragment"
         android:label="@string/title_stadium"
-        tools:layout="@layout/fragment_stadium" />
+        tools:layout="@layout/fragment_stadium" >
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_referee"

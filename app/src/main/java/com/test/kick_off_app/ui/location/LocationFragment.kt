@@ -37,7 +37,6 @@ class LocationFragment : Fragment() {
 
         binding.buttonClose.setOnClickListener {
             findNavController().navigate(R.id.action_locationFragment_to_locationBarFragment)
-
         }
 
         val locationViewModel =

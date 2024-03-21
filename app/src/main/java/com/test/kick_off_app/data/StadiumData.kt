@@ -27,7 +27,7 @@ data class Stadium(
     @SerializedName("closeAt"      ) var closeAt      : String? = null
 )
 
-data class Reservation(
+data class StadiumInfoList(
     @SerializedName("externalId" ) var externalId : String?  = null,
     @SerializedName("stadiumId"  ) var stadiumId  : Int?     = null,
     @SerializedName("subName"    ) var subName    : String?  = null,
@@ -37,4 +37,9 @@ data class Reservation(
     @SerializedName("status"     ) var status     : Boolean? = null
 )
 
-
+data class StadiumDetail(
+    val stadium: Stadium,
+    val stadiumInfoList: List<StadiumInfoList>,
+    val stadiumRateList: List<Any?>,
+    val stadiumStar: Boolean,
+)

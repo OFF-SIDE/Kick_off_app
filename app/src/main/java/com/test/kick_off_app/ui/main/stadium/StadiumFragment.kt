@@ -48,7 +48,6 @@ class StadiumFragment : Fragment() {
             ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
 
         val recyclerView: RecyclerView = binding.rvStadium
-        //view.findViewById(R.id.rv_stadium)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         // divider
@@ -58,7 +57,7 @@ class StadiumFragment : Fragment() {
 
         // rv adapter
         stadiumAdapter = StadiumAdapter { stadiumId ->
-            val intent = Intent(requireActivity(), StadiumActivity::class.java)
+            val intent = Intent(requireContext(), StadiumActivity::class.java)
             intent.putExtra("stadiumId", stadiumId)
             startActivity(intent)
         }
