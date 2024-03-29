@@ -65,5 +65,5 @@ dependencies {
     // okhttp
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     // glide
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 }

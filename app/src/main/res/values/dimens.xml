@@ -24,5 +24,7 @@
 
     <dimen name="rv_stadium_info_height">54dp</dimen>
 
+    <dimen name="idpw_bar_radius">5dp</dimen>
+
 
 </resources>

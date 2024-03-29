@@ -1,14 +1,21 @@
 package com.test.kick_off_app
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.test.kick_off_app.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,6 +50,20 @@ class MainActivity : AppCompatActivity() {
 
 
         checkPermission()
+
+        val pref = getSharedPreferences("isFirst", MODE_PRIVATE)
+        val first = pref.getBoolean("isFirst", false)
+        if (first == false) {
+            //Log.d("Is first Time?", "first")
+            val editor = pref.edit()
+            editor.putBoolean("isFirst", true)
+            editor.commit()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        } else {
+            //Log.d("Is first Time?", "not first")
+        }
     }
     fun checkPermission() {
         //현재 안드로이드 버전이 6.0미만이면 메서드를 종료한다.
@@ -57,4 +78,33 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    /*
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        val currentFragment = binding.container.findNavController().currentDestination
+
+        if(currentFragment!!.id == R.id.navigation_stadium && (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE)){
+            Log.d("fragment", "stadium")
+            Toast.makeText(this, "fragment stadium", Toast.LENGTH_SHORT).show()
+
+        }
+        /*
+        val view = currentFocus
+        if (view != null && (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE) && view is EditText && !view.javaClass.name.startsWith(
+                "android.webkit."
+            )
+        ) {
+            val scrcoords = IntArray(2)
+            view.getLocationOnScreen(scrcoords)
+            val x = ev.rawX + view.getLeft() - scrcoords[0]
+            val y = ev.rawY + view.getTop() - scrcoords[1]
+            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom()) (this.getSystemService(
+                INPUT_METHOD_SERVICE
+            ) as InputMethodManager).hideSoftInputFromWindow(
+                this.window.decorView.applicationWindowToken, 0
+            )
+        }
+         */
+        return super.dispatchTouchEvent(ev)
+    }
+    */
 }

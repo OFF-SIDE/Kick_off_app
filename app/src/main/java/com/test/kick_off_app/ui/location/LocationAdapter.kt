@@ -14,7 +14,9 @@ class LocationAdapter(private val onClick: (Int) -> Unit) : RecyclerView.Adapter
     inner class LocationViewHolder(private val binding: RvLocationItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-            binding.textLocation.text = getLocation(LocationEnum.values()[position])
+            var locationText = getLocation(LocationEnum.values()[position])
+            locationText = if (locationText.length > 2) locationText.dropLast(1) else locationText
+            binding.textLocation.text = locationText
             if (locations[position]){
                 // 활성
                 binding.buttonLocation.setBackgroundResource(R.drawable.border_location_selected_button)

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -95,6 +96,18 @@ class StadiumFragment : Fragment() {
                 stadiumAdapter.notifyDataSetChanged()
             }
             swipe.isRefreshing = false
+        }
+
+
+        binding.outsideArea.setOnClickListener {
+            if( binding.containerLocation.findNavController().currentDestination!!.id == R.id.locationFragment){
+                binding.containerLocation.findNavController().navigate(R.id.action_locationFragment_to_locationBarFragment)
+                Log.e("location", "11")
+            }
+            else if( binding.containerLocation.findNavController().currentDestination!!.id == R.id.locationBarFragment){
+                Log.e("locationBar", "22")
+            }
+
         }
 
     }

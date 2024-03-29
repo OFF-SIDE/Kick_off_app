@@ -4,15 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.test.kick_off_app.databinding.ActivityStadiumBinding
-import com.test.kick_off_app.ui.main.stadium.StadiumAdapter
 import com.test.kick_off_app.ui.main.stadium.StadiumDetailViewModel
 import com.test.kick_off_app.ui.main.stadium.StadiumInfoAdapter
-import com.test.kick_off_app.ui.main.stadium.StadiumViewModel
 
 class StadiumActivity : AppCompatActivity() {
     lateinit var binding: ActivityStadiumBinding
