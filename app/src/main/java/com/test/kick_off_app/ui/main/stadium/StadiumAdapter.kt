@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.test.kick_off_app.R
 import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.databinding.RvStadiumItemBinding
+import com.test.kick_off_app.network.GlideApp
 
 class StadiumAdapter(val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<StadiumAdapter.StadiumViewHolder>() {
     private var items = listOf<Stadium>()
@@ -19,6 +20,7 @@ class StadiumAdapter(val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<Stadium
             binding.priceStadium.setText(stadium.price)
             binding.ratingStadium.setText(stadium.totalRating.toString())
             Glide.with(binding.imageView)
+                //.load(stadium.image)
                 .load(stadium.image)
                 .error(R.drawable.baseline_error_24)
                 .into(binding.imageView)

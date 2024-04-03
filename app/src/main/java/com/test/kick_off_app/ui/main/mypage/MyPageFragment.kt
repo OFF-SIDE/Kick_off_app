@@ -28,11 +28,23 @@ class MyPageFragment : Fragment() {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        /*
         val textView: TextView = binding.textMypage
         mypageViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+         */
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val myPageFragment =
+            ViewModelProvider(this).get(MyPageViewModel::class.java)
+
+
     }
 
     override fun onDestroyView() {

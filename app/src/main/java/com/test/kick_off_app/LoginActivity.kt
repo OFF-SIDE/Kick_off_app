@@ -42,9 +42,9 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        mDetector = GestureDetectorCompat(this, SingleTapListener())
+        //mDetector = GestureDetectorCompat(this, SingleTapListener())
     }
-
+    /*
     // 터치 영역에 따라 키보드를 숨기기 위해 구현
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         // Activity에서 터치 이벤트가 발생할 때 현재 포커스를 가진 뷰를 저장
@@ -81,4 +81,6 @@ class LoginActivity : AppCompatActivity() {
             return super.onSingleTapUp(e)
         }
     }
+
+     */
 }

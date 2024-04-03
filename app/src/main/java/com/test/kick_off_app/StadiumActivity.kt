@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.test.kick_off_app.databinding.ActivityStadiumBinding
+import com.test.kick_off_app.network.GlideApp
 import com.test.kick_off_app.ui.main.stadium.StadiumDetailViewModel
 import com.test.kick_off_app.ui.main.stadium.StadiumInfoAdapter
 
@@ -45,7 +46,7 @@ class StadiumActivity : AppCompatActivity() {
             binding.textPrice.setText(stadiumDetail.stadium.price)
             binding.textComment.setText(stadiumDetail.stadium.comment)
 
-            Glide.with(binding.imageStadium)
+            GlideApp.with(binding.imageStadium)
                 .load(stadiumDetail.stadium.image)
                 .error(R.drawable.baseline_error_24)
                 .into(binding.imageStadium)

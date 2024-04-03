@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -66,4 +67,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     // glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    kapt("android.arch.lifecycle:compiler:1.1.1")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
 }
