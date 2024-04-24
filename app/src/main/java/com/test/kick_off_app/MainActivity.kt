@@ -15,6 +15,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.test.kick_off_app.databinding.ActivityMainBinding
+import com.kakao.sdk.common.util.Utility
+import com.kakao.sdk.user.UserApiClient
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash", keyHash)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         checkPermission()
 
+
         val pref = getSharedPreferences("isFirst", MODE_PRIVATE)
         val first = pref.getBoolean("isFirst", false)
         if (first == false) {
@@ -63,6 +69,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             //Log.d("Is first Time?", "not first")
+            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                if (error != null) {
+                    Toast.makeText(this, "로그인 기록 없음", Toast.LENGTH_SHORT).show()
+                } else if (tokenInfo != null) {
+                    Toast.makeText(this, "자동 로그인" +
+                            "\n회원번호: ${tokenInfo.id}" +
+                            "\n만료시간: ${tokenInfo.expiresIn} 초", Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
     fun checkPermission() {

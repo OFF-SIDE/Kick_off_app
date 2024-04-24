@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_navigation"
+    app:startDestination="@id/registerFirstFragment">
+
+    <fragment
+        android:id="@+id/registerFirstFragment"
+        android:name="com.test.kick_off_app.ui.register.RegisterFirstFragment"
+        android:label="fragment_register_first"
+        tools:layout="@layout/fragment_register_first" >
+        <action
+            android:id="@+id/action_registerFirstFragment_to_registerSecondFragment"
+            app:destination="@id/registerSecondFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerSecondFragment"
+        android:name="com.test.kick_off_app.ui.register.RegisterSecondFragment"
+        android:label="fragment_register_second"
+        tools:layout="@layout/fragment_register_second" >
+        <action
+            android:id="@+id/action_registerSecondFragment_to_registerThirdFragment"
+            app:destination="@id/registerThirdFragment" />
+        <action
+            android:id="@+id/action_registerSecondFragment_to_registerFirstFragment"
+            app:destination="@id/registerFirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerThirdFragment"
+        android:name="com.test.kick_off_app.ui.register.RegisterThirdFragment"
+        android:label="fragment_register_third"
+        tools:layout="@layout/fragment_register_third" >
+        <action
+            android:id="@+id/action_registerThirdFragment_to_registerSecondFragment"
+            app:destination="@id/registerSecondFragment" />
+    </fragment>
+</navigation>

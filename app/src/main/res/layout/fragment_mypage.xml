@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView15"
+                android:id="@+id/image_profile"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_marginStart="32dp"
@@ -33,11 +33,11 @@
                 android:layout_marginTop="17dp"
                 android:text="홍길동"
                 android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView15"
-                app:layout_constraintTop_toTopOf="@+id/imageView15" />
+                app:layout_constraintStart_toEndOf="@+id/image_profile"
+                app:layout_constraintTop_toTopOf="@+id/image_profile" />
 
             <ImageView
-                android:id="@+id/imageView16"
+                android:id="@+id/button_login_mypage"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="-15dp"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="60dp"
                 android:text="설정"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView15" />
+                app:layout_constraintTop_toBottomOf="@+id/image_profile" />
 
             <TextView
                 android:id="@+id/text_etc_guide"

@@ -24,17 +24,20 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //mDetector = GestureDetectorCompat(this, SingleTapListener())
+        mDetector = GestureDetectorCompat(this, SingleTapListener())
 
+        /*
         binding.buttonRegister.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent)
             finish()
         }
+
+         */
     }
 
-    /*
+
     // 터치 영역에 따라 키보드를 숨기기 위해 구현
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         // Activity에서 터치 이벤트가 발생할 때 현재 포커스를 가진 뷰를 저장
@@ -71,6 +74,4 @@ class RegisterActivity : AppCompatActivity() {
             return super.onSingleTapUp(e)
         }
     }
-
-     */
 }

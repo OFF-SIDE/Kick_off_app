@@ -70,4 +70,6 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     kapt("android.arch.lifecycle:compiler:1.1.1")
     kapt("com.github.bumptech.glide:compiler:4.16.0")
+    // 카카오 로그인 모듈
+    implementation("com.kakao.sdk:v2-all:2.20.1")
 }
