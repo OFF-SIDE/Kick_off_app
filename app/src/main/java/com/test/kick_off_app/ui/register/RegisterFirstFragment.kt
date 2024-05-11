@@ -46,7 +46,7 @@ class RegisterFirstFragment : Fragment() {
         _binding = FragmentRegisterFirstBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
 
-        binding.button.setOnClickListener {
+        binding.nextButton.setOnClickListener {
             findNavController().navigate(R.id.action_registerFirstFragment_to_registerSecondFragment)
         }
 

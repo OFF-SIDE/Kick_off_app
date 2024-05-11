@@ -52,17 +52,20 @@ class RegisterThirdFragment : Fragment() {
     ): View? {
         _binding = FragmentRegisterThirdBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+
+        binding.prevButton.setOnClickListener {
+            findNavController().navigate(R.id.action_registerThirdFragment_to_registerSecondFragment)
+        }
+
+        binding.nextButton.setOnClickListener {
+            findNavController().navigate(R.id.action_registerThirdFragment_to_registerFourthFragment)
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.button3.setOnClickListener {
-            var intent = Intent(getActivity(), MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-        }
 
     }
 

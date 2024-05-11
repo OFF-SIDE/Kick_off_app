@@ -1,6 +1,7 @@
 package com.test.kick_off_app.ui.register
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
+import com.test.kick_off_app.MainActivity
 import com.test.kick_off_app.R
 import com.test.kick_off_app.databinding.FragmentRegisterFirstBinding
+import com.test.kick_off_app.databinding.FragmentRegisterFourthBinding
 import com.test.kick_off_app.databinding.FragmentRegisterSecondBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,12 +25,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [RegisterSecondFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RegisterSecondFragment : Fragment() {
+class RegisterFourthFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    private var _binding: FragmentRegisterSecondBinding? = null
+    private var _binding: FragmentRegisterFourthBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,15 +50,17 @@ class RegisterSecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRegisterSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterFourthBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
 
         binding.prevButton.setOnClickListener {
-            findNavController().navigate(R.id.action_registerSecondFragment_to_registerFirstFragment)
+            findNavController().navigate(R.id.action_registerFourthFragment_to_registerThirdFragment)
         }
 
         binding.nextButton.setOnClickListener {
-            findNavController().navigate(R.id.action_registerSecondFragment_to_registerThirdFragment)
+            var intent = Intent(getActivity(), MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
 
         return binding.root
@@ -63,8 +68,6 @@ class RegisterSecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
     }
 
@@ -95,7 +98,7 @@ class RegisterSecondFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            RegisterSecondFragment().apply {
+            RegisterFourthFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -34,5 +34,17 @@
         <action
             android:id="@+id/action_registerThirdFragment_to_registerSecondFragment"
             app:destination="@id/registerSecondFragment" />
+        <action
+            android:id="@+id/action_registerThirdFragment_to_registerFourthFragment"
+            app:destination="@id/registerFourthFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFourthFragment"
+        android:name="com.test.kick_off_app.ui.register.RegisterFourthFragment"
+        android:label="fragment_register_fourth"
+        tools:layout="@layout/fragment_register_fourth" >
+        <action
+            android:id="@+id/action_registerFourthFragment_to_registerThirdFragment"
+            app:destination="@id/registerThirdFragment" />
     </fragment>
 </navigation>
