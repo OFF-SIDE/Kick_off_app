@@ -24,17 +24,18 @@ class StadiumViewModel : ViewModel() {
 
     fun getStadium(location: String?, category: String?) = viewModelScope.launch {
         try{
-            _result.value = repository.getStadium(location, category)
+            //_result.value = repository.getStadium(location, category)
+            repository.getStadium(location, category)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
     fun getStadium2(location1: String?, location2:String?, category: String?) = viewModelScope.launch {
         try{
-            val result1 = repository.getStadium(location1, category) ?: listOf()
-            val result2 = repository.getStadium(location2, category) ?: listOf()
+            //val result1 = repository.getStadium(location1, category) ?: listOf()
+            //val result2 = repository.getStadium(location2, category) ?: listOf()
 
-            _result.value = result1 + result2
+            //_result.value = result1 + result2
         } catch (e: Exception) {
             e.printStackTrace()
         }

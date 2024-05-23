@@ -1,3 +1,5 @@
+
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -72,4 +74,13 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.16.0")
     // 카카오 로그인 모듈
     implementation("com.kakao.sdk:v2-all:2.20.1")
+    // sandwich - retrofit 에러처리
+    implementation("com.github.skydoves:sandwich:2.0.7")
+    implementation("com.github.skydoves:sandwich-retrofit:2.0.7") // For Retrofit (Android)
+    // circle image view
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    // viewpager2
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    // retrofit 에러처리
+    implementation("com.github.haroldadmin:NetworkResponseAdapter:5.0.0")
 }

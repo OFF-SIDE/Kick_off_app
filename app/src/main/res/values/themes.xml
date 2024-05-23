@@ -28,4 +28,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowActivityTransitions">true</item>
     </style>
+    <style name="TabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

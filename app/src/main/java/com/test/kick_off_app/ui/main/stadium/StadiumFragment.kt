@@ -57,7 +57,7 @@ class StadiumFragment : Fragment() {
         recyclerView.addItemDecoration(dividerItemDecoration)
 
         // rv adapter
-        stadiumAdapter = StadiumAdapter { stadiumId ->
+        stadiumAdapter = StadiumAdapter(requireContext()) { stadiumId ->
             val intent = Intent(requireContext(), StadiumActivity::class.java)
             intent.putExtra("stadiumId", stadiumId)
             startActivity(intent)

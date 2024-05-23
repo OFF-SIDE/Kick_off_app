@@ -1,5 +1,7 @@
 package com.test.kick_off_app.ui.main.stadium
 
+import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,9 +9,14 @@ import com.bumptech.glide.Glide
 import com.test.kick_off_app.R
 import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.databinding.RvStadiumItemBinding
+import com.test.kick_off_app.downloadImage
 import com.test.kick_off_app.network.GlideApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.File
 
-class StadiumAdapter(val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<StadiumAdapter.StadiumViewHolder>() {
+class StadiumAdapter(val context: Context, val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<StadiumAdapter.StadiumViewHolder>() {
     private var items = listOf<Stadium>()
 
     inner class StadiumViewHolder(private val binding: RvStadiumItemBinding):
@@ -19,12 +26,25 @@ class StadiumAdapter(val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<Stadium
             binding.addressStadium.setText(stadium.location)
             binding.priceStadium.setText(stadium.price)
             binding.ratingStadium.setText(stadium.totalRating.toString())
+            /*
+            val filename = stadium.name + "downloadImage.jpg"
+            CoroutineScope(Dispatchers.Main).launch {
+                downloadImage(context, stadium.image!!, filename)
+                val myImageFile = File(context.getFilesDir(), filename)
+                if(myImageFile.exists()){
+                    val myBitmap = BitmapFactory.decodeFile(myImageFile.absolutePath)
+                    binding.imageView.setImageBitmap(myBitmap)
+                }
+            }
+            */
+            /*
             Glide.with(binding.imageView)
                 //.load(stadium.image)
                 .load(stadium.image)
                 .error(R.drawable.baseline_error_24)
                 .into(binding.imageView)
 
+             */
             binding.root.setOnClickListener {
                 // rv click event
                 onClick(stadium.id)

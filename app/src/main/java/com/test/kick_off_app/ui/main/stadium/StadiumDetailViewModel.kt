@@ -17,7 +17,7 @@ class StadiumDetailViewModel : ViewModel() {
 
     fun getStadiumDetail(stadiumId: Int, userId: Int) = viewModelScope.launch {
         try{
-            _result.value = repository.getStadiumDetail(stadiumId, userId)
+            //_result.value = repository.getStadiumDetail(stadiumId, userId)
         } catch (e: Exception) {
             e.printStackTrace()
         }

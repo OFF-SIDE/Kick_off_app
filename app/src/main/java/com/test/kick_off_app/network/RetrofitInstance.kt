@@ -1,6 +1,8 @@
 package com.test.kick_off_app.network
 
 import android.util.Log
+import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
+import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Retrofit
@@ -28,6 +30,7 @@ object RetrofitInstance {
         .Builder()
         .baseUrl(BASE_URL)
         .client(client)
+        .addCallAdapterFactory(NetworkResponseAdapterFactory())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

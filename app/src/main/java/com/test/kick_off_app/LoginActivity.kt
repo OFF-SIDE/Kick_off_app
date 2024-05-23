@@ -93,6 +93,22 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
 
                          */
+
+                        // 토큰 정보 보기
+                        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                            if (error != null) {
+                                //Log.e(TAG, "토큰 정보 보기 실패", error)
+                            }
+                            else if (tokenInfo != null) {
+                                //Log.i(TAG, "토큰 정보 보기 성공" +
+                                        "\n회원번호: ${tokenInfo.id}" +
+                                        "\n만료시간: ${tokenInfo.expiresIn} 초")
+                                // 1
+                            }
+                        }
+
+
+
                         val options = ActivityOptions.makeSceneTransitionAnimation(
                             this,
                             android.util.Pair(binding.textTitle, "titleTran"),
@@ -127,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun kakaoLogin() {
+    private fun isUserAMember() {
 
     }
 }

@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.kakao.sdk.user.UserApiClient
 import com.test.kick_off_app.LoginActivity
+import com.test.kick_off_app.RegisterActivity
+import com.test.kick_off_app.ScrapActivity
 import com.test.kick_off_app.databinding.FragmentMypageBinding
 import com.test.kick_off_app.showToast
 
@@ -47,7 +49,7 @@ class MyPageFragment : Fragment() {
         val myPageFragment =
             ViewModelProvider(this).get(MyPageViewModel::class.java)
 
-        binding.buttonLoginMypage.setOnClickListener {
+        binding.textCategoryGuide.setOnClickListener {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
         }
@@ -73,6 +75,36 @@ class MyPageFragment : Fragment() {
                     requireActivity().showToast("로그아웃 성공. 토큰삭제")
                 }
             }
+        }
+
+
+        // edit 버튼
+        binding.buttonEditMypage.setOnClickListener {
+            it.isSelected = !it.isSelected
+            if(it.isSelected){
+                binding.textCategory.visibility = View.GONE
+                binding.textCategoryEdit.setText(binding.textCategory.text.toString())
+                binding.textCategoryEdit.visibility = View.VISIBLE
+
+                binding.textLocation.visibility = View.GONE
+                binding.textLocationEdit.setText(binding.textLocation.text.toString())
+                binding.textLocationEdit.visibility = View.VISIBLE
+            }
+            else{
+                binding.textCategoryEdit.visibility = View.GONE
+                binding.textCategory.text = binding.textCategoryEdit.text.toString()
+                binding.textCategory.visibility = View.VISIBLE
+
+                binding.textLocationEdit.visibility = View.GONE
+                binding.textLocation.text = binding.textLocationEdit.text.toString()
+                binding.textLocation.visibility = View.VISIBLE
+            }
+
+        }
+
+        binding.constraintLayoutScrap.setOnClickListener {
+            val intent = Intent(requireActivity(), ScrapActivity::class.java)
+            startActivity(intent)
         }
     }
 

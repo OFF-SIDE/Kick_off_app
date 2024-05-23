@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_registerThirdFragment_to_registerFourthFragment"
             app:destination="@id/registerFourthFragment" />
+        <action
+            android:id="@+id/action_registerThirdFragment_self"
+            app:destination="@id/registerThirdFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFourthFragment"

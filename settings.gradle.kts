@@ -13,9 +13,9 @@ dependencyResolutionManagement {
         maven {
             url = uri("https://devrepo.kakao.com/nexus/content/groups/public/")
         }
+        maven { url = uri("https://jitpack.io" ) }
     }
 }
 
 rootProject.name = "Kick_off_app"
 include(":app")
- 

@@ -7,6 +7,6 @@
     <string name="title_mypage">MyPage</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="native_app_key">37cc79f30e80e40306512fd1b4241978</string>
-    <string name="kakao_key">kakao37cc79f30e80e40306512fd1b4241978</string>
+    <string name="native_app_key">597cfc2bbbba27675f6c49546b7dbc1e</string>
+    <string name="kakao_key">kakao597cfc2bbbba27675f6c49546b7dbc1e</string>
 </resources>

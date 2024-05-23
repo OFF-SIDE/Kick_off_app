@@ -26,5 +26,12 @@
 
     <dimen name="idpw_bar_radius">5dp</dimen>
 
+    <dimen name="rv_chat_list_height">84dp</dimen>
+
+    <dimen name="chat_profile_image_height">40dp</dimen>
+    <dimen name="chat_profile_image_width">40dp</dimen>
+
+    <dimen name="mypage_profile_info_width">146dp</dimen>
+
 
 </resources>
