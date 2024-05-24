@@ -101,8 +101,8 @@ class LoginActivity : AppCompatActivity() {
                             }
                             else if (tokenInfo != null) {
                                 //Log.i(TAG, "토큰 정보 보기 성공" +
-                                        "\n회원번호: ${tokenInfo.id}" +
-                                        "\n만료시간: ${tokenInfo.expiresIn} 초")
+                                //        "\n회원번호: ${tokenInfo.id}" +
+                                //        "\n만료시간: ${tokenInfo.expiresIn} 초")
                                 // 1
                             }
                         }
