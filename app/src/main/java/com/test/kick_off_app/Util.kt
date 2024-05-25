@@ -1,7 +1,11 @@
 package com.test.kick_off_app
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.widget.Toast
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import androidx.security.crypto.MasterKeys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.OutputStream
@@ -28,5 +32,41 @@ suspend fun downloadImage(context: Context, url: String, filename: String) {
         output.flush()
         output.close()
         input.close()
+    }
+}
+
+class SharedPrefManager private constructor(context: Context) {
+    private val prefs: SharedPreferences
+
+    init {
+        val masterKeyAlias = MasterKey.Builder(context)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        prefs = EncryptedSharedPreferences.create(
+            context,
+            "MyEncryptedPrefs",
+            masterKeyAlias,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+    }
+
+    fun saveAccessToken(accessToken: String) {
+        prefs.edit().putString("access_token", accessToken).apply()
+    }
+
+    fun getAccessToken(): String? {
+        return prefs.getString("access_token", null)
+    }
+
+    companion object {
+        private lateinit var instance: SharedPrefManager
+        fun init(context: Context){
+            instance = SharedPrefManager(context)
+        }
+        fun getInstance(): SharedPrefManager {
+            return instance
+        }
     }
 }

@@ -83,4 +83,6 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     // retrofit 에러처리
     implementation("com.github.haroldadmin:NetworkResponseAdapter:5.0.0")
+    // security: EncryptedSharedPreferences 사용
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha03")
 }

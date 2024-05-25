@@ -2,16 +2,20 @@ package com.test.kick_off_app.repository
 
 import android.util.Log
 import com.haroldadmin.cnradapter.NetworkResponse
+import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.data.StadiumDetail
+import com.test.kick_off_app.network.ErrorResponse
 import com.test.kick_off_app.network.GetStadiumApi
 import com.test.kick_off_app.network.GetStadiumDetailApi
+import com.test.kick_off_app.network.KakaoLoginApi
 import com.test.kick_off_app.network.RetrofitInstance
+import com.test.kick_off_app.network.SuccessfulResponse
+import retrofit2.create
 
 class Repository {
     private val getStadiumClient = RetrofitInstance.getInstance().create(GetStadiumApi::class.java)
     private val getStadiumDetailApi = RetrofitInstance.getInstance().create(GetStadiumDetailApi::class.java)
-
-
+    private val kakaoLoginClient = RetrofitInstance.getInstance().create(KakaoLoginApi::class.java)
 
     suspend fun getStadium(location: String?, category: String?){
         when(val res = getStadiumClient.getStadium(location, category)){
@@ -57,5 +61,9 @@ class Repository {
         }
     }
 */
+
+    suspend fun kakaoLogin(oauthId:String): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>{
+        return kakaoLoginClient.kakaoLogin(oauthId)
+    }
 
 }

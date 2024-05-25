@@ -21,11 +21,11 @@ class LocationViewModel: ViewModel() {
         get() = _locations
 
     private val _selectCount = MutableLiveData<Int>()
-
     val selectCount: LiveData<Int>
         get() = _selectCount
 
     init {
+        // viewmodel이 생성될 때 livedate 초기화
         val initialArray = Array(Constants.LOCATION_SIZE) { false }
         _locations.value = initialArray
         _selectCount.value = 0
