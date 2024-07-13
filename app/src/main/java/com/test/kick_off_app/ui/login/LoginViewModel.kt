@@ -48,7 +48,8 @@ class LoginViewModel: BaseViewModel() {
             is NetworkResponse.ServerError -> {
                 // 서버 에러시
                 Log.d("ServerError code", res.body!!.errorCode.toString())
-                Log.d("ServerError message", res.body!!.message)
+                Log.d("ServerError message", res.body!!.message+"카카오로그인실패")
+
 
                 if(res.body!!.errorCode == 1001){
                     //유저가 존재하지 않을 때
@@ -62,8 +63,9 @@ class LoginViewModel: BaseViewModel() {
             }
             is NetworkResponse.UnknownError -> {
                 // 언노운 에러시
-                Log.d("UnknownError code", res.body!!.errorCode.toString())
-                Log.d("UnknownError message", res.body!!.message)
+                Log.d("UnknownError code", "!!")
+                //Log.d("UnknownError code", res.body!!.errorCode.toString())
+                //Log.d("UnknownError message", res.body!!.message)
             }
         }
     }

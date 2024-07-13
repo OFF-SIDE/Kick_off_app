@@ -63,7 +63,7 @@ class SharedPrefManager private constructor(context: Context) {
 
     fun putUserInfo(userInfo: UserInfo){
         with(prefs.edit()){
-            putInt("id",userInfo.id!!)
+            putLong("id",userInfo.id!!)
             putString("name",userInfo.name)
             putString("nickname",userInfo.nickname)
             putString("location",userInfo.location)
@@ -73,13 +73,13 @@ class SharedPrefManager private constructor(context: Context) {
     }
 
     fun getUserInfo(): UserInfo? {
-        val id = prefs.getInt("id", -1)
+        val id = prefs.getLong("id", -1)
         val name = prefs.getString("name", null)
         val nickname = prefs.getString("nickname", null)
         val location = prefs.getString("location", null)
         val category = prefs.getString("category", null)
 
-        return if (id != -1 && name != null && nickname != null && location != null && category != null) {
+        return if (id != -1L && name != null && nickname != null && location != null && category != null) {
             UserInfo(id, name, nickname, location, category)
         } else {
             null

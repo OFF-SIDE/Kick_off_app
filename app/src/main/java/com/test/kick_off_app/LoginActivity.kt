@@ -5,7 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.kakao.sdk.auth.model.OAuthToken
@@ -34,24 +37,45 @@ class LoginActivity : AppCompatActivity() {
     val manager: SharedPrefManager by lazy {
         SharedPrefManager.getInstance()
     }
+    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //RegisterActivityResult(Contract자료형, 콜백메서드)를 이용해서
+        //ActivityResultLauncher를 초기화 해준다.
         val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+
+        activityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {//Result 매개변수 콜백 메서드
+                //ActivityResultLauncher<T>에서 T를 intent로 설정했으므로
+                //intent자료형을 Result 매개변수(콜백)를 통해 받아온다
+                //엑티비티에서 데이터를 갖고왔을 때만 실행
+                if (it.resultCode == RESULT_OK) {
+                    //SubActivity에서 갖고온 Intent(It)
+                    val myData: Intent? = it.data
+                    val address = it.data?.getStringExtra("KEY1") ?: ""
+                    Log.e("LoginActivity", address)
+                    loginViewModel.auth()
+                }
+            }
+
+
 
         val dialog = LoadingDialog(this)
 
         // 1. 저장된 액세스 토큰이 있으면 자동로그인
-        dialog.show()
+        //dialog.show()
         loginViewModel.auth()
 
         loginViewModel.viewEvent.observe(this) {
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
                     LoginViewModel.EVENT_AUTH_SUCCESS -> {
+                        Log.e("Access token valid", "111")
                         showToast("액세스 토큰 유효. 자동 로그인.")
                         Intent(this, MainActivity::class.java).apply {
                             startActivity(this)
@@ -70,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
                             else{
                                 Handler(Looper.getMainLooper()).postDelayed({
                                     // 3초 후에 실행할 코드
-                                    dialog.dismiss()
+                                    //dialog.dismiss()
                                 }, 3000) // 딜레이 시간 (밀리초)
                             }
                         }
@@ -80,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                     LoginViewModel.EVENT_KAKAO_LOGIN_NO_USER -> {
                         // 회원가입 필요
+                        /*
                         val options = ActivityOptions.makeSceneTransitionAnimation(
                             this,
                             android.util.Pair(binding.textTitle, "titleTran"),
@@ -88,35 +113,14 @@ class LoginActivity : AppCompatActivity() {
 
                         val intent = Intent(this, RegisterActivity::class.java)
                         startActivity(intent, options.toBundle())
+                         */
+                        val intent = Intent(this, RegisterActivity::class.java)
+                        activityResultLauncher.launch(intent)
                     }
                 }
             }
         }
 
-
-        // 2. 저장된 카카오 토큰이 있다면 kakaoLogin api를 통해 액세스 토큰 요청 후 로그인
-        //serviceLogin(loginViewModel)
-
-        // 로그인 정보 확인
-        /*
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                Toast.makeText(this, "로그인 기록 없음", Toast.LENGTH_SHORT).show()
-            } else if (tokenInfo != null) {
-                Toast.makeText(this, "자동 로그인" +
-                        "\n회원번호: ${tokenInfo.id}" +
-                        "\n만료시간: ${tokenInfo.expiresIn} 초", Toast.LENGTH_SHORT).show()
-
-
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                finish()
-            }
-        }
-
-         */
-
-        // 로그인 정보가 없는 경우
 
         // 카카오 계정 로그인용 콜백
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -175,20 +179,4 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun serviceLogin(viewModel: LoginViewModel) {
-        // 토큰 정보 보기
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                showToast("토큰 정보 보기 실패")
-            }
-            else if (tokenInfo != null) {
-                showToast("토큰 정보 보기 성공???" +
-                            "\n회원번호: ${tokenInfo.id}" +
-                            "\n만료시간: ${tokenInfo.expiresIn} 초")
-
-                // 서비스 서버에 회원번호를 보내 인증
-                viewModel.kakaoLogin(tokenInfo.id.toString())
-            }
-        }
-    }
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -12,13 +13,89 @@ import android.widget.EditText
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.getSystemService
 import androidx.core.view.GestureDetectorCompat
+import androidx.lifecycle.ViewModelProvider
+import com.test.kick_off_app.data.UserInfo
 import com.test.kick_off_app.databinding.ActivityRegisterBinding
+import com.test.kick_off_app.functions.showToast
+import com.test.kick_off_app.ui.login.LoginViewModel
+import com.test.kick_off_app.ui.register.OnRegisterButtonClickListener
+import com.test.kick_off_app.ui.register.OnUserDataPassFirst
+import com.test.kick_off_app.ui.register.OnUserDataPassSecond
+import com.test.kick_off_app.ui.register.OnUserDataPassThird
+import com.test.kick_off_app.ui.register.RegisterViewModel
 
-class RegisterActivity : AppCompatActivity() {
+
+class RegisterActivity : AppCompatActivity(), OnUserDataPassFirst, OnUserDataPassSecond, OnUserDataPassThird, OnRegisterButtonClickListener {
     lateinit var binding: ActivityRegisterBinding
     private lateinit var mDetector: GestureDetectorCompat
 
     private var prevFocus: View? = null
+
+    var userInfo = UserInfo()
+
+    private lateinit var registerViewModel:RegisterViewModel
+    override fun onUserDataPassFirst(bundle: Bundle) {
+        val id = bundle.getLong("id")
+        val name = bundle.getString("name")
+        val nickname = bundle.getString("nickname")
+
+        /*
+        userInfo.id = id
+        userInfo.name = name
+        userInfo.nickname = nickname
+
+
+         */
+        registerViewModel.updateId(id)
+        registerViewModel.updateName(name!!)
+        registerViewModel.updateNickname(nickname!!)
+
+        userInfo = registerViewModel.userInfo.value!!
+
+        Log.e("id", id.toString())
+        Log.e("name", name!!)
+        Log.e("nickname", nickname!!)
+    }
+
+    override fun onUserDataPassSecond(bundle: Bundle) {
+        val location = bundle.getString("location")
+
+        /*
+        userInfo.location = location
+
+         */
+
+        registerViewModel.updateLocation(location!!)
+
+        userInfo = registerViewModel.userInfo.value!!
+
+        Log.e("location", location!!)
+    }
+
+    override fun onUserDataPassThird(bundle: Bundle) {
+        val category = bundle.getString("category")
+        /*
+        userInfo.category = category
+
+         */
+
+        registerViewModel.updateCategory(category!!)
+
+        userInfo = registerViewModel.userInfo.value!!
+
+        Log.e("category", category!!)
+    }
+
+    override fun onRegisterButtonClick() {
+        if(registerViewModel.isUserInfoValid()){
+            // userInfo의 필드가 차있는 경우
+            // 회원정보 post
+            userInfo = registerViewModel.userInfo.value!!
+
+            registerViewModel.kakaoSignup(userInfo)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -26,6 +103,28 @@ class RegisterActivity : AppCompatActivity() {
 
         mDetector = GestureDetectorCompat(this, SingleTapListener())
 
+        registerViewModel = ViewModelProvider(this)[com.test.kick_off_app.ui.register.RegisterViewModel::class.java]
+
+        val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+
+        registerViewModel.viewEvent.observe(this){
+            it.getContentIfNotHandled()?.let { event ->
+                when(event){
+                    RegisterViewModel.EVENT_KAKAO_SIGNUP_SUCCESS -> {
+                        showToast("회원가입 성공. 자동 로그인")
+                        val intent = Intent(this, MainActivity::class.java).apply {
+                            //엑티비티에서 갖고올 데이터
+                            putExtra("KEY1", "bbbbb")
+                            //데이터 전달이 성공했을 때의 변수 값 저장
+                            // Result_ok = -1 일 때 엑티비티에 전달된다.
+                        }
+                        setResult(RESULT_OK, intent)
+                        //엑티비티 종료
+                        if (!isFinishing) finish()
+                    }
+                }
+            }
+        }
         /*
         binding.buttonRegister.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

@@ -25,6 +25,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [RegisterThirdFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+interface OnUserDataPassThird {
+    fun onUserDataPassThird(bundle: Bundle)
+}
+
 class RegisterThirdFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -37,6 +42,10 @@ class RegisterThirdFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var callback: OnBackPressedCallback
+
+    private var category:String? = ""
+
+    var dataPasser: OnUserDataPassThird? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +67,16 @@ class RegisterThirdFragment : Fragment() {
         }
 
         binding.nextButton.setOnClickListener {
-            findNavController().navigate(R.id.action_registerThirdFragment_to_registerFourthFragment)
+            category = binding.textCategory.text.toString()
+            if(category != null){
+                val bundle = Bundle().apply{
+                    putString("category", category)
+                }
+
+                dataPasser?.onUserDataPassThird(bundle)
+
+                findNavController().navigate(R.id.action_registerThirdFragment_to_registerFourthFragment)
+            }
         }
 
         return binding.root
@@ -76,6 +94,7 @@ class RegisterThirdFragment : Fragment() {
                 findNavController().navigate(R.id.action_registerThirdFragment_to_registerSecondFragment)
             }
         }
+        dataPasser = context as OnUserDataPassThird
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 

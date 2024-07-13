@@ -26,11 +26,16 @@ interface GetStadiumDetailApi{
 }
 
 interface KakaoLoginApi{
-    @POST("login/kakao")
+    @POST("auth/login/kakao")
     suspend fun kakaoLogin(@Body oauthId:String): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>
 }
 
-interface authApi{
+interface AuthApi{
     @GET("auth")
     suspend fun auth(): NetworkResponse<SuccessfulResponse<UserInfo>, ErrorResponse>
+}
+
+interface KakaoSignupApi{
+    @POST("auth/signup/kakao")
+    suspend fun kakaoSignup(@Body userInfo: UserInfo): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>
 }

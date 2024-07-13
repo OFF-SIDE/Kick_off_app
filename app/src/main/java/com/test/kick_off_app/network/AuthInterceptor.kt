@@ -11,10 +11,14 @@ class AuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = manager.getAccessToken()
 
-        val request =
-            chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer $token")
-                .build()
+        val requestBuilder = chain.request().newBuilder()
+
+        // 토큰이 null이 아닐 때만 헤더를 추가
+        if (token != null) {
+            requestBuilder.addHeader("Authorization", "Bearer $token")
+        }
+
+        val request = requestBuilder.build()
         return chain.proceed(request)
     }
 }

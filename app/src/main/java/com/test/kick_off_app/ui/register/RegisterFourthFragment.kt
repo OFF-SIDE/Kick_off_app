@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.test.kick_off_app.MainActivity
 import com.test.kick_off_app.R
+import com.test.kick_off_app.RegisterActivity
 import com.test.kick_off_app.databinding.FragmentRegisterFirstBinding
 import com.test.kick_off_app.databinding.FragmentRegisterFourthBinding
 import com.test.kick_off_app.databinding.FragmentRegisterSecondBinding
@@ -26,8 +27,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-interface OnNextButtonClickListener {
-    fun onNextButtonClick()
+interface OnRegisterButtonClickListener {
+    fun onRegisterButtonClick()
 }
 
 class RegisterFourthFragment : Fragment() {
@@ -43,7 +44,7 @@ class RegisterFourthFragment : Fragment() {
 
     private lateinit var callback: OnBackPressedCallback
 
-    private lateinit var mNextButtonClickListener: OnNextButtonClickListener
+    private lateinit var mNextButtonClickListener: OnRegisterButtonClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +72,8 @@ class RegisterFourthFragment : Fragment() {
             startActivity(intent)
 
              */
-            mNextButtonClickListener.onNextButtonClick()
+
+            mNextButtonClickListener.onRegisterButtonClick()
         }
 
 
@@ -90,7 +92,7 @@ class RegisterFourthFragment : Fragment() {
                 findNavController().navigate(R.id.action_registerSecondFragment_to_registerFirstFragment)
             }
         }
-        if(context is OnNextButtonClickListener){
+        if(context is OnRegisterButtonClickListener){
             mNextButtonClickListener = context
         }
         else{

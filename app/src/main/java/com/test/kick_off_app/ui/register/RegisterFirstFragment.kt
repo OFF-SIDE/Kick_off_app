@@ -1,5 +1,6 @@
 package com.test.kick_off_app.ui.register
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [RegisterFirstFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+interface OnUserDataPassFirst {
+    fun onUserDataPassFirst(bundle: Bundle)
+}
+
 class RegisterFirstFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -31,6 +37,12 @@ class RegisterFirstFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private var id:Long? = null
+    private var name:String? = ""
+    private var nickname:String? = ""
+
+    var dataPasser: OnUserDataPassFirst? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +60,26 @@ class RegisterFirstFragment : Fragment() {
         // Inflate the layout for this fragment
 
         binding.nextButton.setOnClickListener {
-            findNavController().navigate(R.id.action_registerFirstFragment_to_registerSecondFragment)
+            name = binding.textName.text.toString()
+            nickname = binding.textNickName.text.toString()
+
+            if(id != null && name != null && nickname != null){
+                val curruntId = id
+                val bundle = Bundle().apply {
+                    putLong("id", curruntId!!)
+                    putString("name", name)
+                    putString("nickname", nickname)
+                }
+
+                dataPasser?.onUserDataPassFirst(bundle)
+
+                findNavController().navigate(R.id.action_registerFirstFragment_to_registerSecondFragment)
+            }
+            else{
+                requireActivity().showToast("정보를 입력해주세요.")
+            }
+
+
         }
 
         // 사용자 정보 요청 (기본)
@@ -64,10 +95,19 @@ class RegisterFirstFragment : Fragment() {
                         "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                         "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}" +
                         "\n이름: ${user.kakaoAccount?.name}")
+
+                id = user.id
+                nickname = user.kakaoAccount?.profile?.nickname
+                binding.textNickName.setText(nickname)
             }
         }
 
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dataPasser = context as OnUserDataPassFirst
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

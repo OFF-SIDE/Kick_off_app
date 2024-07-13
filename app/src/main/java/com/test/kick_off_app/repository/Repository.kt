@@ -5,20 +5,22 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.data.StadiumDetail
 import com.test.kick_off_app.data.UserInfo
+import com.test.kick_off_app.network.AuthApi
 import com.test.kick_off_app.network.ErrorResponse
 import com.test.kick_off_app.network.GetStadiumApi
 import com.test.kick_off_app.network.GetStadiumDetailApi
 import com.test.kick_off_app.network.KakaoLoginApi
+import com.test.kick_off_app.network.KakaoSignupApi
 import com.test.kick_off_app.network.RetrofitInstance
 import com.test.kick_off_app.network.SuccessfulResponse
-import com.test.kick_off_app.network.authApi
 import retrofit2.create
 
 class Repository {
     private val getStadiumClient = RetrofitInstance.getInstance().create(GetStadiumApi::class.java)
     private val getStadiumDetailApi = RetrofitInstance.getInstance().create(GetStadiumDetailApi::class.java)
     private val kakaoLoginClient = RetrofitInstance.getInstance().create(KakaoLoginApi::class.java)
-    private val authClient = RetrofitInstance.getInstance().create(authApi::class.java)
+    private val authClient = RetrofitInstance.getInstance().create(AuthApi::class.java)
+    private val kakaoSignupClient = RetrofitInstance.getInstance().create(KakaoSignupApi::class.java)
 
     suspend fun getStadium(location: String?, category: String?){
         /*
@@ -47,26 +49,6 @@ class Repository {
 
          */
     }
-/*
-
-    suspend fun getStadiumDetail(stadiumId: Int, userId: Int): StadiumDetail? {
-        try {
-            val res = getStadiumDetailApi.getStadiumDetail(stadiumId, userId)
-            if(res.status == "ok"){
-                // ok
-                return res.data
-            }
-            else {
-                // fail : error
-                return null
-            }
-        }
-        catch (e:Exception){
-            e.printStackTrace()
-            return null
-        }
-    }
-*/
 
     suspend fun kakaoLogin(oauthId:String): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>{
         return kakaoLoginClient.kakaoLogin(oauthId)
@@ -74,6 +56,10 @@ class Repository {
 
     suspend fun auth(): NetworkResponse<SuccessfulResponse<UserInfo>, ErrorResponse>{
         return authClient.auth()
+    }
+
+    suspend fun kakaoSignup(userInfo: UserInfo): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>{
+        return kakaoSignupClient.kakaoSignup(userInfo)
     }
 
 }

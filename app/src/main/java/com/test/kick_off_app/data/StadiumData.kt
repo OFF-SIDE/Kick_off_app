@@ -45,7 +45,7 @@ data class StadiumDetail(
 )
 
 data class UserInfo(
-    @SerializedName("id"       ) var id       : Int?    = null,
+    @SerializedName("oauthId"  ) var id       : Long?    = null,
     @SerializedName("name"     ) var name     : String? = null,
     @SerializedName("nickname" ) var nickname : String? = null,
     @SerializedName("location" ) var location : String? = null,
