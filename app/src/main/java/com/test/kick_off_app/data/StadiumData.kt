@@ -43,3 +43,11 @@ data class StadiumDetail(
     val stadiumRateList: List<Any?>,
     val stadiumStar: Boolean,
 )
+
+data class UserInfo(
+    @SerializedName("id"       ) var id       : Int?    = null,
+    @SerializedName("name"     ) var name     : String? = null,
+    @SerializedName("nickname" ) var nickname : String? = null,
+    @SerializedName("location" ) var location : String? = null,
+    @SerializedName("category" ) var category : String? = null
+)

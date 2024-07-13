@@ -1,20 +1,15 @@
 package com.test.kick_off_app.ui.register
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.user.UserApiClient
-import com.test.kick_off_app.MainActivity
 import com.test.kick_off_app.R
 import com.test.kick_off_app.databinding.FragmentRegisterFirstBinding
-import com.test.kick_off_app.databinding.FragmentStadiumBinding
-import com.test.kick_off_app.showToast
+import com.test.kick_off_app.functions.showToast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

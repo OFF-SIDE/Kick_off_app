@@ -5,24 +5,33 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.test.kick_off_app.MainActivity
 import com.test.kick_off_app.RegisterActivity
-import com.test.kick_off_app.SharedPrefManager
+import com.test.kick_off_app.functions.SharedPrefManager
 import com.test.kick_off_app.databinding.ActivityLoginBinding
+import com.test.kick_off_app.functions.BaseViewModel
+import com.test.kick_off_app.functions.SingleLiveEvent
 import com.test.kick_off_app.repository.Repository
 import kotlinx.coroutines.launch
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel: BaseViewModel() {
     private val repository = Repository()
     val manager: SharedPrefManager by lazy {
         SharedPrefManager.getInstance()
     }
-    lateinit var binding: ActivityLoginBinding
-    lateinit var context: Context
+
+    companion object {
+        const val EVENT_KAKAO_LOGIN_SUCCESS = 10001
+        const val EVENT_AUTH_SUCCESS = 10002
+        const val EVENT_AUTH_WRONG_TOKEN = 10003
+        const val EVENT_KAKAO_LOGIN_NO_USER = 10004
+    }
+
 
     fun kakaoLogin(oauthId: String) = viewModelScope.launch {
         when(val res = repository.kakaoLogin(oauthId)){
@@ -32,11 +41,9 @@ class LoginViewModel: ViewModel() {
                 Log.d("success message", res.body.message)
 
                 // 토큰 저장
+                manager.putAccessToken(res.body.data)
 
-                manager.saveAccessToken(res.body.data)
-
-                val intent = Intent(context, MainActivity::class.java)
-                context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                viewEvent(EVENT_KAKAO_LOGIN_SUCCESS)
             }
             is NetworkResponse.ServerError -> {
                 // 서버 에러시
@@ -45,14 +52,7 @@ class LoginViewModel: ViewModel() {
 
                 if(res.body!!.errorCode == 1001){
                     //유저가 존재하지 않을 때
-                    val options = ActivityOptions.makeSceneTransitionAnimation(
-                        context as? Activity,
-                        android.util.Pair(binding.textTitle, "titleTran"),
-                        android.util.Pair(binding.imageLogo, "imageTran")
-                    )
-
-                    val intent = Intent(context, RegisterActivity::class.java)
-                    context.startActivity(intent, options.toBundle())
+                    viewEvent(EVENT_KAKAO_LOGIN_NO_USER)
                 }
             }
             is NetworkResponse.NetworkError -> {
@@ -68,12 +68,31 @@ class LoginViewModel: ViewModel() {
         }
     }
 
-    fun setBinding2(binding: ActivityLoginBinding){
-        this.binding = binding
-    }
+    fun auth() = viewModelScope.launch {
+        when(val res = repository.auth()){
+            is NetworkResponse.Success -> {
+                manager.putUserInfo(res.body!!.data)
 
-    fun setContext2(context: Context){
-        this.context = context
+                viewEvent(EVENT_AUTH_SUCCESS)
+            }
+            is NetworkResponse.ServerError -> {
+                // 서버 에러시
+                Log.d("ServerError code", res.body!!.errorCode.toString())
+                Log.d("ServerError message", res.body!!.message)
+
+                viewEvent(EVENT_AUTH_WRONG_TOKEN)
+            }
+            is NetworkResponse.NetworkError -> {
+                // 네트워크 에러시
+                Log.d("NetworkError code", res.body!!.errorCode.toString())
+                Log.d("NetworkError message", res.body!!.message)
+            }
+            is NetworkResponse.UnknownError -> {
+                // 언노운 에러시
+                Log.d("UnknownError code", res.body!!.errorCode.toString())
+                Log.d("UnknownError message", res.body!!.message)
+            }
+        }
     }
 
 }

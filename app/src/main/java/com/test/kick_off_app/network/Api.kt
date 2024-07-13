@@ -4,6 +4,7 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.test.kick_off_app.data.Response
 import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.data.StadiumDetail
+import com.test.kick_off_app.data.UserInfo
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -27,4 +28,9 @@ interface GetStadiumDetailApi{
 interface KakaoLoginApi{
     @POST("login/kakao")
     suspend fun kakaoLogin(@Body oauthId:String): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>
+}
+
+interface authApi{
+    @GET("auth")
+    suspend fun auth(): NetworkResponse<SuccessfulResponse<UserInfo>, ErrorResponse>
 }

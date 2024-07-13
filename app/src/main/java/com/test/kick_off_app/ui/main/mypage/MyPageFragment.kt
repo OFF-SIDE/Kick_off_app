@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.kakao.sdk.user.UserApiClient
 import com.test.kick_off_app.LoginActivity
-import com.test.kick_off_app.RegisterActivity
 import com.test.kick_off_app.ScrapActivity
 import com.test.kick_off_app.databinding.FragmentMypageBinding
-import com.test.kick_off_app.showToast
+import com.test.kick_off_app.functions.showToast
 
 class MyPageFragment : Fragment() {
 

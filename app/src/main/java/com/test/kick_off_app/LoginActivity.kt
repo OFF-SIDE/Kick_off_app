@@ -2,31 +2,38 @@ package com.test.kick_off_app
 
 import android.app.ActivityOptions
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
-import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.test.kick_off_app.databinding.ActivityLoginBinding
-import com.test.kick_off_app.databinding.ActivityMainBinding
+import com.test.kick_off_app.functions.LoadingDialog
+import com.test.kick_off_app.functions.SharedPrefManager
+import com.test.kick_off_app.functions.showToast
 import com.test.kick_off_app.ui.login.LoginViewModel
-import com.test.kick_off_app.ui.main.stadium.StadiumViewModel
 
+
+/*
+카카오 로그인 화면.
+1. 저장된 액세스 토큰이 있다면, 권한 확인을 통해 로그인. 만료시 2번
+2. 저장된 카카오 토큰이 있다면 kakaoLogin api를 통해 액세스 토큰 요청 후 로그인
+3. 둘다 없다면 카카오 토큰을 얻고 2번
+
+로그인
+kakaoLogin api에서 에러코드를 통해 회원정보가 없을 시 회원가입화면으로
+*/
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
+    val manager: SharedPrefManager by lazy {
+        SharedPrefManager.getInstance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +42,63 @@ class LoginActivity : AppCompatActivity() {
 
         val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-        loginViewModel.setBinding2(binding)
-        loginViewModel.setContext2(this)
+        val dialog = LoadingDialog(this)
+
+        // 1. 저장된 액세스 토큰이 있으면 자동로그인
+        dialog.show()
+        loginViewModel.auth()
+
+        loginViewModel.viewEvent.observe(this) {
+            it.getContentIfNotHandled()?.let { event ->
+                when (event) {
+                    LoginViewModel.EVENT_AUTH_SUCCESS -> {
+                        showToast("액세스 토큰 유효. 자동 로그인.")
+                        Intent(this, MainActivity::class.java).apply {
+                            startActivity(this)
+                        }
+                    }
+                    LoginViewModel.EVENT_AUTH_WRONG_TOKEN -> {
+                        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                            if (error == null && tokenInfo != null) {
+                                showToast("토큰 정보 보기 성공" +
+                                        "\n회원번호: ${tokenInfo.id}" +
+                                        "\n만료시간: ${tokenInfo.expiresIn} 초")
+
+                                // 서비스 서버에 회원번호를 보내 인증
+                                loginViewModel.kakaoLogin(tokenInfo.id.toString())
+                            }
+                            else{
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    // 3초 후에 실행할 코드
+                                    dialog.dismiss()
+                                }, 3000) // 딜레이 시간 (밀리초)
+                            }
+                        }
+                    }
+                    LoginViewModel.EVENT_KAKAO_LOGIN_SUCCESS -> {
+                        loginViewModel.auth()
+                    }
+                    LoginViewModel.EVENT_KAKAO_LOGIN_NO_USER -> {
+                        // 회원가입 필요
+                        val options = ActivityOptions.makeSceneTransitionAnimation(
+                            this,
+                            android.util.Pair(binding.textTitle, "titleTran"),
+                            android.util.Pair(binding.imageLogo, "imageTran")
+                        )
+
+                        val intent = Intent(this, RegisterActivity::class.java)
+                        startActivity(intent, options.toBundle())
+                    }
+                }
+            }
+        }
+
+
+        // 2. 저장된 카카오 토큰이 있다면 kakaoLogin api를 통해 액세스 토큰 요청 후 로그인
+        //serviceLogin(loginViewModel)
 
         // 로그인 정보 확인
+        /*
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 Toast.makeText(this, "로그인 기록 없음", Toast.LENGTH_SHORT).show()
@@ -46,11 +106,15 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "자동 로그인" +
                         "\n회원번호: ${tokenInfo.id}" +
                         "\n만료시간: ${tokenInfo.expiresIn} 초", Toast.LENGTH_SHORT).show()
+
+
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
         }
+
+         */
 
         // 로그인 정보가 없는 경우
 
@@ -60,25 +124,13 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "카카오 계정 로그인 실패", Toast.LENGTH_SHORT).show()
             }
             else if (token != null){
-                // 로그인 성공
-                Toast.makeText(this, "카카오 계정 로그인 성공", Toast.LENGTH_SHORT).show()
-                /*
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                    if (error == null && tokenInfo != null) {
+                        showToast("카카오 계정 로그인 성공 후 토큰보기 성공")
 
-
-                val options = ActivityOptions.makeSceneTransitionAnimation(
-                    this,
-                    android.util.Pair(binding.textTitle, "titleTran"),
-                    android.util.Pair(binding.imageLogo, "imageTran")
-                )
-
-                val intent = Intent(this, RegisterActivity::class.java)
-                startActivity(intent, options.toBundle())
-
-                 */
-
-                serviceLogin(loginViewModel)
+                        loginViewModel.kakaoLogin(tokenInfo.id.toString())
+                    }
+                }
             }
         }
 
@@ -100,25 +152,20 @@ class LoginActivity : AppCompatActivity() {
                     } else if (token != null) {
                         Toast.makeText(this, "카카오톡 로그인 성공", Toast.LENGTH_SHORT).show()
 
-                        // 토큰을 통해 서비스 로그인
-                        serviceLogin(loginViewModel)
+
+                        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                            if (error == null && tokenInfo != null) {
+                                showToast("카카오톡 로그인 성공 후 토큰보기 성공")
+
+                                loginViewModel.kakaoLogin(tokenInfo.id.toString())
+                            }
+                        }
                     }
                 }
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
 
-            /*
-            val options = ActivityOptions.makeSceneTransitionAnimation(
-                this,
-                android.util.Pair(binding.textTitle, "titleTran"),
-                android.util.Pair(binding.imageLogo, "imageTran")
-            )
-
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent, options.toBundle())
-
-             */
         }
 
         binding.constraintLayoutSkip.setOnClickListener {
@@ -135,7 +182,7 @@ class LoginActivity : AppCompatActivity() {
                 showToast("토큰 정보 보기 실패")
             }
             else if (tokenInfo != null) {
-                showToast("토큰 정보 보기 성공" +
+                showToast("토큰 정보 보기 성공???" +
                             "\n회원번호: ${tokenInfo.id}" +
                             "\n만료시간: ${tokenInfo.expiresIn} 초")
 

@@ -1,20 +1,11 @@
 package com.test.kick_off_app.ui.main.stadium
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.test.kick_off_app.R
 import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.databinding.RvStadiumItemBinding
-import com.test.kick_off_app.downloadImage
-import com.test.kick_off_app.network.GlideApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.File
 
 class StadiumAdapter(val context: Context, val onClick: (Int?)->(Unit)) : RecyclerView.Adapter<StadiumAdapter.StadiumViewHolder>() {
     private var items = listOf<Stadium>()

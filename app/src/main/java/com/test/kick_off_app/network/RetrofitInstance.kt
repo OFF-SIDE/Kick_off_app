@@ -24,6 +24,7 @@ object RetrofitInstance {
                 .body(responseBody?.toResponseBody(response.body?.contentType()))
                 .build()
         }
+        .addInterceptor(AuthInterceptor())
         .build()
 
     val retrofit = Retrofit

@@ -4,20 +4,24 @@ import android.util.Log
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.data.StadiumDetail
+import com.test.kick_off_app.data.UserInfo
 import com.test.kick_off_app.network.ErrorResponse
 import com.test.kick_off_app.network.GetStadiumApi
 import com.test.kick_off_app.network.GetStadiumDetailApi
 import com.test.kick_off_app.network.KakaoLoginApi
 import com.test.kick_off_app.network.RetrofitInstance
 import com.test.kick_off_app.network.SuccessfulResponse
+import com.test.kick_off_app.network.authApi
 import retrofit2.create
 
 class Repository {
     private val getStadiumClient = RetrofitInstance.getInstance().create(GetStadiumApi::class.java)
     private val getStadiumDetailApi = RetrofitInstance.getInstance().create(GetStadiumDetailApi::class.java)
     private val kakaoLoginClient = RetrofitInstance.getInstance().create(KakaoLoginApi::class.java)
+    private val authClient = RetrofitInstance.getInstance().create(authApi::class.java)
 
     suspend fun getStadium(location: String?, category: String?){
+        /*
         when(val res = getStadiumClient.getStadium(location, category)){
             is NetworkResponse.Success -> {
                 // 성공시
@@ -40,6 +44,8 @@ class Repository {
                 Log.d("UnknownError message", res.body!!.message)
             }
         }
+
+         */
     }
 /*
 
@@ -64,6 +70,10 @@ class Repository {
 
     suspend fun kakaoLogin(oauthId:String): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>{
         return kakaoLoginClient.kakaoLogin(oauthId)
+    }
+
+    suspend fun auth(): NetworkResponse<SuccessfulResponse<UserInfo>, ErrorResponse>{
+        return authClient.auth()
     }
 
 }

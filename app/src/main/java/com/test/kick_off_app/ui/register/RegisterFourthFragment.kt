@@ -25,6 +25,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [RegisterSecondFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+interface OnNextButtonClickListener {
+    fun onNextButtonClick()
+}
+
 class RegisterFourthFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -37,6 +42,8 @@ class RegisterFourthFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var callback: OnBackPressedCallback
+
+    private lateinit var mNextButtonClickListener: OnNextButtonClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,10 +65,15 @@ class RegisterFourthFragment : Fragment() {
         }
 
         binding.nextButton.setOnClickListener {
+            /*
             var intent = Intent(getActivity(), MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
+
+             */
+            mNextButtonClickListener.onNextButtonClick()
         }
+
 
         return binding.root
     }
@@ -77,6 +89,12 @@ class RegisterFourthFragment : Fragment() {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_registerSecondFragment_to_registerFirstFragment)
             }
+        }
+        if(context is OnNextButtonClickListener){
+            mNextButtonClickListener = context
+        }
+        else{
+            throw RuntimeException("$context must implement OnNextButtonClickListener")
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
