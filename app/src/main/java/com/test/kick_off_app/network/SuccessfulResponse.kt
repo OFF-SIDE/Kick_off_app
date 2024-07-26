@@ -11,3 +11,5 @@ data class ErrorResponse(
     val httpStatus: Int,
     val message: String
 )
+
+data class AccessToken(val accessToken: String)

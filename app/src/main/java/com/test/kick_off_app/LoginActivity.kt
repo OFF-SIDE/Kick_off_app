@@ -44,9 +44,10 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+
         //RegisterActivityResult(Contract자료형, 콜백메서드)를 이용해서
         //ActivityResultLauncher를 초기화 해준다.
-        val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
         activityResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -58,32 +59,39 @@ class LoginActivity : AppCompatActivity() {
                     //SubActivity에서 갖고온 Intent(It)
                     val myData: Intent? = it.data
                     val address = it.data?.getStringExtra("KEY1") ?: ""
-                    Log.e("LoginActivity", address)
+                    Log.e("signup callback", address)
                     loginViewModel.auth()
                 }
             }
 
-
-
         val dialog = LoadingDialog(this)
 
         // 1. 저장된 액세스 토큰이 있으면 자동로그인
-        //dialog.show()
+        dialog.show()
         loginViewModel.auth()
 
         loginViewModel.viewEvent.observe(this) {
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
                     LoginViewModel.EVENT_AUTH_SUCCESS -> {
-                        Log.e("Access token valid", "111")
+                        Log.d("Access token valid", "111")
                         showToast("액세스 토큰 유효. 자동 로그인.")
+
+                        dialog.dismiss()
+
+                        finish()
+                        /*
                         Intent(this, MainActivity::class.java).apply {
                             startActivity(this)
                         }
+                         */
                     }
                     LoginViewModel.EVENT_AUTH_WRONG_TOKEN -> {
+                        Log.d("Auth fail", "wrong access token")
                         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                             if (error == null && tokenInfo != null) {
+                                // 카카오 토큰은 있는 경우
+                                Log.d("kakao token", "exist")
                                 showToast("토큰 정보 보기 성공" +
                                         "\n회원번호: ${tokenInfo.id}" +
                                         "\n만료시간: ${tokenInfo.expiresIn} 초")
@@ -92,6 +100,11 @@ class LoginActivity : AppCompatActivity() {
                                 loginViewModel.kakaoLogin(tokenInfo.id.toString())
                             }
                             else{
+                                // 카카오 토큰도 없는 경우
+                                Log.d("kakao token", "not exist")
+
+                                dialog.dismiss()
+
                                 Handler(Looper.getMainLooper()).postDelayed({
                                     // 3초 후에 실행할 코드
                                     //dialog.dismiss()
@@ -114,6 +127,8 @@ class LoginActivity : AppCompatActivity() {
                         val intent = Intent(this, RegisterActivity::class.java)
                         startActivity(intent, options.toBundle())
                          */
+
+                        dialog.dismiss()
                         val intent = Intent(this, RegisterActivity::class.java)
                         activityResultLauncher.launch(intent)
                     }
@@ -171,11 +186,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
-
-        binding.constraintLayoutSkip.setOnClickListener {
-            finish()
-        }
-
 
     }
 

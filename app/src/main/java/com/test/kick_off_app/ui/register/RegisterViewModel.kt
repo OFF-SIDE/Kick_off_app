@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.haroldadmin.cnradapter.NetworkResponse
+import com.test.kick_off_app.data.SignupInfo
 import com.test.kick_off_app.data.Stadium
 
 import com.test.kick_off_app.data.UserInfo
@@ -21,24 +22,24 @@ class RegisterViewModel : BaseViewModel() {
         SharedPrefManager.getInstance()
     }
 
-    private val _userInfo: MutableLiveData<UserInfo> by lazy{
-        MutableLiveData<UserInfo>(UserInfo(-1, "", "", "", ""))
+    private val _signupInfo: MutableLiveData<SignupInfo> by lazy{
+        MutableLiveData<SignupInfo>(SignupInfo(-1, "", "", "", ""))
     }
-    val userInfo: LiveData<UserInfo>
-        get() = _userInfo
+    val signupInfo: LiveData<SignupInfo>
+        get() = _signupInfo
 
     companion object{
         const val EVENT_KAKAO_SIGNUP_SUCCESS = 10001
     }
 
-    fun kakaoSignup(userInfo: UserInfo) = viewModelScope.launch {
-        when(val res = repository.kakaoSignup(userInfo)){
+    fun kakaoSignup(signupInfo: SignupInfo) = viewModelScope.launch {
+        when(val res = repository.kakaoSignup(signupInfo)){
             is NetworkResponse.Success -> {
                 Log.d("success code", res.body.code.toString())
                 Log.d("success message", res.body.message)
 
                 // 토큰 저장
-                manager.putAccessToken(res.body.data)
+                manager.putAccessToken(res.body.data.accessToken)
 
                 viewEvent(EVENT_KAKAO_SIGNUP_SUCCESS)
             }
@@ -67,47 +68,62 @@ class RegisterViewModel : BaseViewModel() {
     }
 
     fun updateId(newId: Long){
-        val currentUserInfo = _userInfo.value
+        _signupInfo.value?.id = newId
+        /*
+        val currentUserInfo = _signupInfo.value
         if (currentUserInfo != null) {
             val updatedUserInfo = currentUserInfo.copy(id = newId)
-            _userInfo.value = updatedUserInfo
+            _signupInfo.value = updatedUserInfo
         }
+         */
     }
 
     fun updateName(newName: String){
-        val currentUserInfo = _userInfo.value
+        _signupInfo.value?.name = newName
+        /*
+        val currentUserInfo = _signupInfo.value
         if (currentUserInfo != null) {
             val updatedUserInfo = currentUserInfo.copy(name = newName)
-            _userInfo.value = updatedUserInfo
+            _signupInfo.value = updatedUserInfo
         }
+        */
     }
 
     fun updateNickname(newNickname: String){
-        val currentUserInfo = _userInfo.value
+        _signupInfo.value?.nickname = newNickname
+        /*
+        val currentUserInfo = _signupInfo.value
         if (currentUserInfo != null) {
             val updatedUserInfo = currentUserInfo.copy(nickname = newNickname)
-            _userInfo.value = updatedUserInfo
+            _signupInfo.value = updatedUserInfo
         }
+        */
     }
 
     fun updateLocation(newLocation: String){
-        val currentUserInfo = _userInfo.value
+        _signupInfo.value?.location = newLocation
+        /*
+        val currentUserInfo = _signupInfo.value
         if (currentUserInfo != null) {
             val updatedUserInfo = currentUserInfo.copy(location = newLocation)
-            _userInfo.value = updatedUserInfo
+            _signupInfo.value = updatedUserInfo
         }
+        */
     }
 
     fun updateCategory(newCategory: String){
-        val currentUserInfo = _userInfo.value
+        _signupInfo.value?.category = newCategory
+        /*
+        val currentUserInfo = _signupInfo.value
         if (currentUserInfo != null) {
             val updatedUserInfo = currentUserInfo.copy(category = newCategory)
-            _userInfo.value = updatedUserInfo
+            _signupInfo.value = updatedUserInfo
         }
+        */
     }
 
     fun isUserInfoValid(): Boolean{
-        val currentUserInfo = _userInfo.value
+        val currentUserInfo = _signupInfo.value
         return currentUserInfo?.let {
             it.id != null &&
             it.name != null &&

@@ -40,20 +40,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-
         setContentView(binding.root)
 
+        // hash값 확인(카카오 디벨로퍼 설정페이지에서 사용)
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash", keyHash)
+
 
         // chat test
         binding.chatButton.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
         }
+        binding.chatButton.visibility = View.GONE
 
         val navView: BottomNavigationView = binding.navView
 
@@ -70,10 +70,10 @@ class MainActivity : AppCompatActivity() {
          */
         navView.setupWithNavController(navController)
 
-
+        // 권한 동의
         checkPermission()
 
-
+    /*
         val pref = getSharedPreferences("isFirst", MODE_PRIVATE)
         val first = pref.getBoolean("isFirst", false)
         if (first == false) {
@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    */
 
         mDetector = GestureDetectorCompat(this, SingleTapListener())
     }
@@ -149,33 +150,5 @@ class MainActivity : AppCompatActivity() {
             return super.onSingleTapUp(e)
         }
     }
-    /*
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        val currentFragment = binding.container.findNavController().currentDestination
 
-        if(currentFragment!!.id == R.id.navigation_stadium && (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE)){
-            Log.d("fragment", "stadium")
-            Toast.makeText(this, "fragment stadium", Toast.LENGTH_SHORT).show()
-
-        }
-        /*
-        val view = currentFocus
-        if (view != null && (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE) && view is EditText && !view.javaClass.name.startsWith(
-                "android.webkit."
-            )
-        ) {
-            val scrcoords = IntArray(2)
-            view.getLocationOnScreen(scrcoords)
-            val x = ev.rawX + view.getLeft() - scrcoords[0]
-            val y = ev.rawY + view.getTop() - scrcoords[1]
-            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom()) (this.getSystemService(
-                INPUT_METHOD_SERVICE
-            ) as InputMethodManager).hideSoftInputFromWindow(
-                this.window.decorView.applicationWindowToken, 0
-            )
-        }
-         */
-        return super.dispatchTouchEvent(ev)
-    }
-    */
 }

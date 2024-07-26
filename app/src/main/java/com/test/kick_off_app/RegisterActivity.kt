@@ -10,89 +10,34 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.getSystemService
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
-import com.test.kick_off_app.data.UserInfo
+import com.test.kick_off_app.data.SignupInfo
 import com.test.kick_off_app.databinding.ActivityRegisterBinding
 import com.test.kick_off_app.functions.showToast
 import com.test.kick_off_app.ui.login.LoginViewModel
 import com.test.kick_off_app.ui.register.OnRegisterButtonClickListener
-import com.test.kick_off_app.ui.register.OnUserDataPassFirst
-import com.test.kick_off_app.ui.register.OnUserDataPassSecond
-import com.test.kick_off_app.ui.register.OnUserDataPassThird
 import com.test.kick_off_app.ui.register.RegisterViewModel
 
 
-class RegisterActivity : AppCompatActivity(), OnUserDataPassFirst, OnUserDataPassSecond, OnUserDataPassThird, OnRegisterButtonClickListener {
+class RegisterActivity : AppCompatActivity(), OnRegisterButtonClickListener {
     lateinit var binding: ActivityRegisterBinding
     private lateinit var mDetector: GestureDetectorCompat
 
     private var prevFocus: View? = null
 
-    var userInfo = UserInfo()
+    var signupInfo = SignupInfo()
 
     private lateinit var registerViewModel:RegisterViewModel
-    override fun onUserDataPassFirst(bundle: Bundle) {
-        val id = bundle.getLong("id")
-        val name = bundle.getString("name")
-        val nickname = bundle.getString("nickname")
-
-        /*
-        userInfo.id = id
-        userInfo.name = name
-        userInfo.nickname = nickname
-
-
-         */
-        registerViewModel.updateId(id)
-        registerViewModel.updateName(name!!)
-        registerViewModel.updateNickname(nickname!!)
-
-        userInfo = registerViewModel.userInfo.value!!
-
-        Log.e("id", id.toString())
-        Log.e("name", name!!)
-        Log.e("nickname", nickname!!)
-    }
-
-    override fun onUserDataPassSecond(bundle: Bundle) {
-        val location = bundle.getString("location")
-
-        /*
-        userInfo.location = location
-
-         */
-
-        registerViewModel.updateLocation(location!!)
-
-        userInfo = registerViewModel.userInfo.value!!
-
-        Log.e("location", location!!)
-    }
-
-    override fun onUserDataPassThird(bundle: Bundle) {
-        val category = bundle.getString("category")
-        /*
-        userInfo.category = category
-
-         */
-
-        registerViewModel.updateCategory(category!!)
-
-        userInfo = registerViewModel.userInfo.value!!
-
-        Log.e("category", category!!)
-    }
 
     override fun onRegisterButtonClick() {
         if(registerViewModel.isUserInfoValid()){
             // userInfo의 필드가 차있는 경우
             // 회원정보 post
-            userInfo = registerViewModel.userInfo.value!!
+            signupInfo = registerViewModel.signupInfo.value!!
 
-            registerViewModel.kakaoSignup(userInfo)
+            registerViewModel.kakaoSignup(signupInfo)
         }
     }
 
@@ -103,7 +48,7 @@ class RegisterActivity : AppCompatActivity(), OnUserDataPassFirst, OnUserDataPas
 
         mDetector = GestureDetectorCompat(this, SingleTapListener())
 
-        registerViewModel = ViewModelProvider(this)[com.test.kick_off_app.ui.register.RegisterViewModel::class.java]
+        registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 

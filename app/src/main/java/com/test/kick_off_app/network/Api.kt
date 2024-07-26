@@ -2,6 +2,7 @@ package com.test.kick_off_app.network
 
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.test.kick_off_app.data.Response
+import com.test.kick_off_app.data.SignupInfo
 import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.data.StadiumDetail
 import com.test.kick_off_app.data.UserInfo
@@ -27,7 +28,7 @@ interface GetStadiumDetailApi{
 
 interface KakaoLoginApi{
     @POST("auth/login/kakao")
-    suspend fun kakaoLogin(@Body oauthId:String): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>
+    suspend fun kakaoLogin(@Body oauthId:String): NetworkResponse<SuccessfulResponse<AccessToken>, ErrorResponse>
 }
 
 interface AuthApi{
@@ -37,5 +38,5 @@ interface AuthApi{
 
 interface KakaoSignupApi{
     @POST("auth/signup/kakao")
-    suspend fun kakaoSignup(@Body userInfo: UserInfo): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>
+    suspend fun kakaoSignup(@Body signupInfo: SignupInfo): NetworkResponse<SuccessfulResponse<AccessToken>, ErrorResponse>
 }

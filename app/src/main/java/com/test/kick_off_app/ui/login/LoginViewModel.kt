@@ -41,9 +41,10 @@ class LoginViewModel: BaseViewModel() {
                 Log.d("success message", res.body.message)
 
                 // 토큰 저장
-                manager.putAccessToken(res.body.data)
+                manager.putAccessToken(res.body.data.accessToken)
 
-                viewEvent(EVENT_KAKAO_LOGIN_SUCCESS)
+                //viewEvent(EVENT_KAKAO_LOGIN_SUCCESS)
+                viewEvent(EVENT_KAKAO_LOGIN_NO_USER)
             }
             is NetworkResponse.ServerError -> {
                 // 서버 에러시
@@ -63,9 +64,9 @@ class LoginViewModel: BaseViewModel() {
             }
             is NetworkResponse.UnknownError -> {
                 // 언노운 에러시
-                Log.d("UnknownError code", "!!")
-                //Log.d("UnknownError code", res.body!!.errorCode.toString())
-                //Log.d("UnknownError message", res.body!!.message)
+                Log.d("UnknownError code", res.body!!.errorCode.toString())
+                Log.d("UnknownError code", res.body!!.errorCode.toString())
+                Log.d("UnknownError message", res.body!!.message)
             }
         }
     }
@@ -73,26 +74,33 @@ class LoginViewModel: BaseViewModel() {
     fun auth() = viewModelScope.launch {
         when(val res = repository.auth()){
             is NetworkResponse.Success -> {
+                Log.d("id", res.body!!.data.id.toString())
+                Log.d("name", res.body!!.data.name.toString())
+                Log.d("nickname", res.body!!.data.nickname.toString())
+                Log.d("location", res.body!!.data.location.toString())
+                Log.d("category", res.body!!.data.category.toString())
+
+
                 manager.putUserInfo(res.body!!.data)
 
                 viewEvent(EVENT_AUTH_SUCCESS)
             }
             is NetworkResponse.ServerError -> {
                 // 서버 에러시
-                Log.d("ServerError code", res.body!!.errorCode.toString())
-                Log.d("ServerError message", res.body!!.message)
+                Log.e("ServerError code", res.body!!.errorCode.toString())
+                Log.e("ServerError message", res.body!!.message)
 
                 viewEvent(EVENT_AUTH_WRONG_TOKEN)
             }
             is NetworkResponse.NetworkError -> {
                 // 네트워크 에러시
-                Log.d("NetworkError code", res.body!!.errorCode.toString())
-                Log.d("NetworkError message", res.body!!.message)
+                Log.e("NetworkError code", res.body!!.errorCode.toString())
+                Log.e("NetworkError message", res.body!!.message)
             }
             is NetworkResponse.UnknownError -> {
                 // 언노운 에러시
-                Log.d("UnknownError code", res.body!!.errorCode.toString())
-                Log.d("UnknownError message", res.body!!.message)
+                Log.e("UnknownError code", res.body!!.errorCode.toString())
+                Log.e("UnknownError message", res.body!!.message)
             }
         }
     }

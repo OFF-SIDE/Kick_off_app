@@ -44,8 +44,16 @@ data class StadiumDetail(
     val stadiumStar: Boolean,
 )
 
+data class SignupInfo(
+    @SerializedName("oauthId"  ) var id       : Long?   = null,
+    @SerializedName("name"     ) var name     : String? = null,
+    @SerializedName("nickname" ) var nickname : String? = null,
+    @SerializedName("location" ) var location : String? = null,
+    @SerializedName("category" ) var category : String? = null
+)
+
 data class UserInfo(
-    @SerializedName("oauthId"  ) var id       : Long?    = null,
+    @SerializedName("id"       ) var id       : Long?   = null,
     @SerializedName("name"     ) var name     : String? = null,
     @SerializedName("nickname" ) var nickname : String? = null,
     @SerializedName("location" ) var location : String? = null,

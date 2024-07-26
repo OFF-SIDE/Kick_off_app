@@ -2,9 +2,11 @@ package com.test.kick_off_app.repository
 
 import android.util.Log
 import com.haroldadmin.cnradapter.NetworkResponse
+import com.test.kick_off_app.data.SignupInfo
 import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.data.StadiumDetail
 import com.test.kick_off_app.data.UserInfo
+import com.test.kick_off_app.network.AccessToken
 import com.test.kick_off_app.network.AuthApi
 import com.test.kick_off_app.network.ErrorResponse
 import com.test.kick_off_app.network.GetStadiumApi
@@ -50,7 +52,7 @@ class Repository {
          */
     }
 
-    suspend fun kakaoLogin(oauthId:String): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>{
+    suspend fun kakaoLogin(oauthId:String): NetworkResponse<SuccessfulResponse<AccessToken>, ErrorResponse>{
         return kakaoLoginClient.kakaoLogin(oauthId)
     }
 
@@ -58,8 +60,8 @@ class Repository {
         return authClient.auth()
     }
 
-    suspend fun kakaoSignup(userInfo: UserInfo): NetworkResponse<SuccessfulResponse<String>, ErrorResponse>{
-        return kakaoSignupClient.kakaoSignup(userInfo)
+    suspend fun kakaoSignup(signupInfo: SignupInfo): NetworkResponse<SuccessfulResponse<AccessToken>, ErrorResponse>{
+        return kakaoSignupClient.kakaoSignup(signupInfo)
     }
 
 }

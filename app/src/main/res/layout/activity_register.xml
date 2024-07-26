@@ -10,11 +10,12 @@
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/pretendard_black"
         android:gravity="center"
         android:text="KICK-OFF"
-        android:textSize="25sp"
-        android:textStyle="bold|italic"
+        android:textColor="@color/black"
+        android:textSize="27sp"
         android:transitionName="titleTran"
         app:layout_constraintBottom_toBottomOf="@+id/image_logo"
         app:layout_constraintStart_toEndOf="@+id/image_logo"
@@ -24,24 +25,24 @@
         android:id="@+id/image_logo"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:layout_marginStart="101dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="60dp"
         android:transitionName="imageTran"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo_1" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_register"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:navGraph="@navigation/register_navigation"/>
+        app:navGraph="@navigation/register_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
