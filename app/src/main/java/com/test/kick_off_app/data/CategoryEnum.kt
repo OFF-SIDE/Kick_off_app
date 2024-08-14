@@ -1,7 +1,11 @@
 package com.test.kick_off_app.data
 
 enum class CategoryEnum {
-    FOOTBALL, VOLLEYBALL, BASKETBALL, TENNIS, BASEBALL, ETC
+    테니스, 축구, 풋살, 족구, 야구, 농구, 배구, 배드민턴, 기타
+}
+
+enum class StadiumCategoryEnum {
+    테니스장, 축구장, 풋살장, 족구장, 야구장, 농구장, 배구장, 배드민턴장, 기타
 }
 
 enum class LocationEnum {

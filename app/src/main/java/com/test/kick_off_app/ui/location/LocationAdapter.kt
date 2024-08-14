@@ -19,11 +19,11 @@ class LocationAdapter(private val onClick: (Int) -> Unit) : RecyclerView.Adapter
             binding.textLocation.text = locationText
             if (locations[position]){
                 // 활성
-                binding.buttonLocation.setBackgroundResource(R.drawable.border_location_selected_button)
+                binding.buttonLocation.setBackgroundResource(R.drawable.location_selected_button)
             }
             else{
                 // 비활성
-                binding.buttonLocation.setBackgroundResource(R.drawable.border_location_button)
+                binding.buttonLocation.setBackgroundResource(R.drawable.location_button)
             }
             binding.root.setOnClickListener {
                 // RecyclerView item click event

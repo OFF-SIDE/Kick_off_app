@@ -24,32 +24,8 @@ class Repository {
     private val authClient = RetrofitInstance.getInstance().create(AuthApi::class.java)
     private val kakaoSignupClient = RetrofitInstance.getInstance().create(KakaoSignupApi::class.java)
 
-    suspend fun getStadium(location: String?, category: String?){
-        /*
-        when(val res = getStadiumClient.getStadium(location, category)){
-            is NetworkResponse.Success -> {
-                // 성공시
-                Log.d("success code", res.body.code.toString())
-                Log.d("success message", res.body.message)
-            }
-            is NetworkResponse.ServerError -> {
-                // 서버 에러시
-                Log.d("ServerError code", res.body!!.errorCode.toString())
-                Log.d("ServerError message", res.body!!.message)
-            }
-            is NetworkResponse.NetworkError -> {
-                // 네트워크 에러시
-                Log.d("NetworkError code", res.body!!.errorCode.toString())
-                Log.d("NetworkError message", res.body!!.message)
-            }
-            is NetworkResponse.UnknownError -> {
-                // 언노운 에러시
-                Log.d("UnknownError code", res.body!!.errorCode.toString())
-                Log.d("UnknownError message", res.body!!.message)
-            }
-        }
-
-         */
+    suspend fun getStadium(locations: String?, category: String?): NetworkResponse<SuccessfulResponse<List<Stadium>>, ErrorResponse>{
+        return getStadiumClient.getStadium(locations, category)
     }
 
     suspend fun kakaoLogin(oauthId:String): NetworkResponse<SuccessfulResponse<AccessToken>, ErrorResponse>{

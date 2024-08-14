@@ -38,6 +38,7 @@ suspend fun downloadImage(context: Context, url: String, filename: String) {
 
 class SharedPrefManager private constructor(context: Context) {
     private val prefs: SharedPreferences
+    private var listener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     init {
         val masterKeyAlias = MasterKey.Builder(context)
@@ -53,6 +54,18 @@ class SharedPrefManager private constructor(context: Context) {
         )
     }
 
+    fun registerPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        this.listener = listener
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    fun unregisterPreferenceChangeListener() {
+        listener?.let {
+            prefs.unregisterOnSharedPreferenceChangeListener(it)
+            listener = null
+        }
+    }
+
     fun putAccessToken(accessToken: String) {
         prefs.edit().putString("access_token", accessToken).apply()
     }
@@ -62,7 +75,7 @@ class SharedPrefManager private constructor(context: Context) {
     }
 
     fun putUserInfo(userInfo: UserInfo){
-        with(prefs.edit()){
+        prefs.edit().apply{
             putLong("id",userInfo.id!!)
             putString("name",userInfo.name)
             putString("nickname",userInfo.nickname)
@@ -84,6 +97,16 @@ class SharedPrefManager private constructor(context: Context) {
         } else {
             null
         }
+    }
+
+    fun getCategory(): String?{
+        return prefs.getString("current_category", null)
+    }
+
+    fun setCategory(category: String){
+        prefs.edit()
+            .putString("current_category", category)
+            .apply()
     }
 
     companion object {

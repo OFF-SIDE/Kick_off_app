@@ -15,7 +15,7 @@ import retrofit2.http.Query
 
 interface GetStadiumApi{
     @GET("stadium/location")
-    suspend fun getStadium(@Query("location") location: String? = null, @Query("category") category: String? = null): NetworkResponse<SuccessfulResponse<List<Stadium>>, ErrorResponse>
+    suspend fun getStadium(@Query("location") locations: String? = null, @Query("category") category: String? = null): NetworkResponse<SuccessfulResponse<List<Stadium>>, ErrorResponse>
 }
 
 interface GetStadiumDetailApi{

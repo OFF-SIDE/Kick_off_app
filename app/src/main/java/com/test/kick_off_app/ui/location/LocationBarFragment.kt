@@ -15,9 +15,6 @@ import com.test.kick_off_app.functions.safeNavigate
 
 class LocationBarFragment : Fragment() {
     private var _binding: FragmentLocationBarBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -43,6 +40,7 @@ class LocationBarFragment : Fragment() {
 
         binding.textLocation.setText(locationViewModel.getLocationText())
         locationViewModel.locations.observe(viewLifecycleOwner){locations ->
+            // 선택된 지역 변경시 UI 업데이트
             binding.textLocation.setText(locationViewModel.getLocationText())
         }
 

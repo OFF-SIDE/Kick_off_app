@@ -43,11 +43,10 @@ class LocationFragment : Fragment() {
             ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
 
         val recyclerView: RecyclerView = binding.rvLocation
-        //recyclerView.layoutManager = GridLayoutManager(context, 7)
 
         // grid rv
-        //var listManager = GridLayoutManager(this, 3)
         locationAdapter = LocationAdapter {position ->
+            // 지역버튼 터치시 값 업데이트
             locationViewModel.toggleLocation(requireContext(), position)
         }
         recyclerView.adapter = locationAdapter

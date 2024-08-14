@@ -11,6 +11,7 @@ import com.kakao.sdk.user.UserApiClient
 import com.test.kick_off_app.LoginActivity
 import com.test.kick_off_app.ScrapActivity
 import com.test.kick_off_app.databinding.FragmentMypageBinding
+import com.test.kick_off_app.functions.SharedPrefManager
 import com.test.kick_off_app.functions.showToast
 
 class MyPageFragment : Fragment() {
@@ -48,6 +49,10 @@ class MyPageFragment : Fragment() {
         val myPageFragment =
             ViewModelProvider(this).get(MyPageViewModel::class.java)
 
+        val manager: SharedPrefManager by lazy {
+            SharedPrefManager.getInstance()
+        }
+
         binding.textCategoryGuide.setOnClickListener {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
@@ -62,6 +67,7 @@ class MyPageFragment : Fragment() {
                     requireActivity().showToast("연결 끊기 성공. 토큰삭제")
                 }
             }
+            manager.putAccessToken("")
         }
 
         binding.constraintLayoutInfo.setOnClickListener {

@@ -3,56 +3,35 @@ package com.test.kick_off_app.ui.register
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.test.kick_off_app.MainActivity
 import com.test.kick_off_app.R
 import com.test.kick_off_app.RegisterActivity
 import com.test.kick_off_app.databinding.FragmentRegisterThirdBinding
-
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterThirdFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
-interface OnUserDataPassThird {
-    fun onUserDataPassThird(bundle: Bundle)
-}
+import com.test.kick_off_app.ui.category.CategoryAdapter
 
 class RegisterThirdFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     private var _binding: FragmentRegisterThirdBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var callback: OnBackPressedCallback
 
-    private var category:String? = ""
+    private lateinit var categoryAdapter: CategoryAdapter
 
-    var dataPasser: OnUserDataPassThird? = null
+    private lateinit var viewModel: RegisterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        viewModel = ViewModelProvider(requireActivity())[RegisterViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -67,16 +46,31 @@ class RegisterThirdFragment : Fragment() {
         }
 
         binding.nextButton.setOnClickListener {
-            category = binding.textCategory.text.toString()
-            if(category != null){
-                val bundle = Bundle().apply{
-                    putString("category", category)
+            viewModel.signupInfo.value?.category?.let{
+                if(it.isNotEmpty()) {
+                    findNavController().navigate(R.id.action_registerThirdFragment_to_registerFourthFragment)
                 }
-
-                dataPasser?.onUserDataPassThird(bundle)
-
-                findNavController().navigate(R.id.action_registerThirdFragment_to_registerFourthFragment)
             }
+        }
+
+        binding.buttonReset.setOnClickListener {
+            viewModel.resetCategory()
+        }
+
+        // grid rv
+        categoryAdapter = CategoryAdapter {position ->
+            viewModel.updateCategory(position)
+            Log.d("category position", position.toString())
+        }
+        val recyclerView: RecyclerView = binding.rvCategory
+        recyclerView.adapter = categoryAdapter
+
+        viewModel.categories.value?.let{
+            categoryAdapter.setLocations(it)
+        }
+        viewModel.categories.observe(viewLifecycleOwner){category->
+            categoryAdapter.setLocations(category)
+            categoryAdapter.notifyDataSetChanged()
         }
 
         return binding.root
@@ -94,32 +88,11 @@ class RegisterThirdFragment : Fragment() {
                 findNavController().navigate(R.id.action_registerThirdFragment_to_registerSecondFragment)
             }
         }
-        dataPasser = context as OnUserDataPassThird
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onDetach() {
         super.onDetach()
         callback.remove()
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterThirdFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegisterThirdFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

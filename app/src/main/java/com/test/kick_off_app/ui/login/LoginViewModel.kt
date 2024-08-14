@@ -43,13 +43,15 @@ class LoginViewModel: BaseViewModel() {
                 // 토큰 저장
                 manager.putAccessToken(res.body.data.accessToken)
 
-                //viewEvent(EVENT_KAKAO_LOGIN_SUCCESS)
-                viewEvent(EVENT_KAKAO_LOGIN_NO_USER)
+                viewEvent(EVENT_KAKAO_LOGIN_SUCCESS)
+                //viewEvent(EVENT_KAKAO_LOGIN_NO_USER)
             }
             is NetworkResponse.ServerError -> {
                 // 서버 에러시
-                Log.d("ServerError code", res.body!!.errorCode.toString())
-                Log.d("ServerError message", res.body!!.message+"카카오로그인실패")
+                res.body?.let{
+                    Log.d("ServerError code", it.errorCode.toString())
+                    Log.d("ServerError message", it.message)
+                }
 
 
                 if(res.body!!.errorCode == 1001){
@@ -59,14 +61,17 @@ class LoginViewModel: BaseViewModel() {
             }
             is NetworkResponse.NetworkError -> {
                 // 네트워크 에러시
-                Log.d("NetworkError code", res.body!!.errorCode.toString())
-                Log.d("NetworkError message", res.body!!.message)
+                res.body?.let{
+                    Log.d("NetworkError code", it.errorCode.toString())
+                    Log.d("NetworkError message", it.message)
+                }
             }
             is NetworkResponse.UnknownError -> {
                 // 언노운 에러시
-                Log.d("UnknownError code", res.body!!.errorCode.toString())
-                Log.d("UnknownError code", res.body!!.errorCode.toString())
-                Log.d("UnknownError message", res.body!!.message)
+                res.body?.let{
+                    Log.d("UnknownError code", it.errorCode.toString())
+                    Log.d("UnknownError message", it.message)
+                }
             }
         }
     }

@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
     val manager: SharedPrefManager by lazy {
         SharedPrefManager.getInstance()
     }
-    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    lateinit var signUpLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,18 +49,28 @@ class LoginActivity : AppCompatActivity() {
         //RegisterActivityResult(Contract자료형, 콜백메서드)를 이용해서
         //ActivityResultLauncher를 초기화 해준다.
 
-        activityResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            {//Result 매개변수 콜백 메서드
-                //ActivityResultLauncher<T>에서 T를 intent로 설정했으므로
-                //intent자료형을 Result 매개변수(콜백)를 통해 받아온다
-                //엑티비티에서 데이터를 갖고왔을 때만 실행
-                if (it.resultCode == RESULT_OK) {
-                    //SubActivity에서 갖고온 Intent(It)
-                    val myData: Intent? = it.data
-                    val address = it.data?.getStringExtra("KEY1") ?: ""
-                    Log.e("signup callback", address)
-                    loginViewModel.auth()
+        signUpLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
+                if (result.resultCode == RESULT_OK) {
+                    result.data?.let {data ->
+                        val isSuccess = data.getBooleanExtra("SIGNUP_SUCCESS", false)
+                        if (isSuccess) {
+                            // 회원가입 성공 시
+                            showToast("회원가입 성공! 자동 로그인 중...")
+
+                            loginViewModel.auth()
+                        } else {
+                            // 회원가입 실패 시 실행할 코드
+                            val errorCode = data.getIntExtra("ERROR_CODE", -1)
+                            if(errorCode==1002){
+                                showToast("이미 가입된 회원이 있습니다")
+                            }
+                            else{
+                                showToast("회원가입을 실패했습니다.")
+                            }
+                        }
+                    }
+
                 }
             }
 
@@ -80,11 +90,6 @@ class LoginActivity : AppCompatActivity() {
                         dialog.dismiss()
 
                         finish()
-                        /*
-                        Intent(this, MainActivity::class.java).apply {
-                            startActivity(this)
-                        }
-                         */
                     }
                     LoginViewModel.EVENT_AUTH_WRONG_TOKEN -> {
                         Log.d("Auth fail", "wrong access token")
@@ -104,11 +109,6 @@ class LoginActivity : AppCompatActivity() {
                                 Log.d("kakao token", "not exist")
 
                                 dialog.dismiss()
-
-                                Handler(Looper.getMainLooper()).postDelayed({
-                                    // 3초 후에 실행할 코드
-                                    //dialog.dismiss()
-                                }, 3000) // 딜레이 시간 (밀리초)
                             }
                         }
                     }
@@ -130,7 +130,7 @@ class LoginActivity : AppCompatActivity() {
 
                         dialog.dismiss()
                         val intent = Intent(this, RegisterActivity::class.java)
-                        activityResultLauncher.launch(intent)
+                        signUpLauncher.launch(intent)
                     }
                 }
             }

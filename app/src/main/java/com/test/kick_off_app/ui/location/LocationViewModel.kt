@@ -103,4 +103,20 @@ class LocationViewModel: ViewModel() {
 
         return text
     }
+
+    fun getLocations(): String{
+        // _locations의 값이 null이 아닌지 확인하고, null이면 빈 문자열을 반환
+        val locations = _locations.value ?: return ""
+
+        // 선택된 지역들의 이름을 리스트에 추가
+        val selectedLocations = mutableListOf<String>()
+        for (index in locations.indices) {
+            if (locations[index]) {
+                selectedLocations.add(getLocation(LocationEnum.values()[index]))
+            }
+        }
+
+        // 리스트를 콤마(,)로 연결하여 문자열로 반환
+        return selectedLocations.joinToString(separator = ",")
+    }
 }
