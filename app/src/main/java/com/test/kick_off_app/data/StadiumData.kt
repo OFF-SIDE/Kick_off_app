@@ -1,6 +1,7 @@
 package com.test.kick_off_app.data
 
 import com.google.gson.annotations.SerializedName
+import retrofit2.http.Body
 
 data class Response<T>(
     @SerializedName("status"  ) var status  : String?         = null,
@@ -58,4 +59,14 @@ data class UserInfo(
     @SerializedName("nickname" ) var nickname : String? = null,
     @SerializedName("location" ) var location : String? = null,
     @SerializedName("category" ) var category : String? = null
+)
+
+data class FileData(
+    var file: String? = null,
+    var preSignedUrl: String? = null
+)
+
+data class FileUploadRequest(
+    var fileType: FileTypeEnum,
+    var fileName: String
 )

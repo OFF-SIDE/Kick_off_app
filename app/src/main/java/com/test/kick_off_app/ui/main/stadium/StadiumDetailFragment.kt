@@ -10,6 +10,8 @@ import com.test.kick_off_app.R
 import com.test.kick_off_app.databinding.FragmentStadiumBinding
 import com.test.kick_off_app.databinding.FragmentStadiumDetailBinding
 
+// 사용안함: stadium activity로 대체됨
+
 class StadiumDetailFragment : Fragment() {
     private var _binding: FragmentStadiumDetailBinding? = null
     private val binding get() = _binding!!

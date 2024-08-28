@@ -1,3 +1,3 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:drawable="@drawable/progress_bar_1" />
+  <item android:drawable="@drawable/check_3x" />
 </selector>

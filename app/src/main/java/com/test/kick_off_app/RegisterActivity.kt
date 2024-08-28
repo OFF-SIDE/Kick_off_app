@@ -59,7 +59,7 @@ class RegisterActivity : AppCompatActivity(), OnRegisterButtonClickListener {
                 when(event){
                     RegisterViewModel.EVENT_KAKAO_SIGNUP_SUCCESS -> {
                         showToast("회원가입 성공. 자동 로그인")
-                        val intent = Intent(this, LoginActivity::class.java).apply {
+                        val intent = Intent().apply {
                             // 전달할 데이터
                             putExtra("SIGNUP_SUCCESS", true)
                         }
@@ -70,7 +70,7 @@ class RegisterActivity : AppCompatActivity(), OnRegisterButtonClickListener {
                     }
                     RegisterViewModel.EVENT_KAKAO_SIGNUP_ALREADY_EXISTS -> {
                         showToast("이미 가입된 계정이 있습니다.")
-                        val intent = Intent(this, LoginActivity::class.java).apply{
+                        val intent = Intent().apply{
                             putExtra("SIGNUP_SUCCESS", false)
                             putExtra("ERROR_CODE", 1002)
                         }

@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +47,17 @@ class LoginActivity : AppCompatActivity() {
 
         val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // 뒤로 가기 시 실패로 결과 전달
+                val intent = Intent().apply {
+                    putExtra("SIGNUP_SUCCESS", false)
+                }
+                setResult(RESULT_OK, intent)
+                finish()
+            }
+        })
+
         //RegisterActivityResult(Contract자료형, 콜백메서드)를 이용해서
         //ActivityResultLauncher를 초기화 해준다.
 
@@ -70,7 +82,6 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
                     }
-
                 }
             }
 
@@ -84,12 +95,19 @@ class LoginActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
                     LoginViewModel.EVENT_AUTH_SUCCESS -> {
-                        Log.d("Access token valid", "111")
+                        Log.d("Access token", "valid")
                         showToast("액세스 토큰 유효. 자동 로그인.")
 
                         dialog.dismiss()
 
-                        finish()
+                        val intent = Intent().apply {
+                            // 전달할 데이터
+                            putExtra("LOGIN_SUCCESS", true)
+                        }
+                        setResult(RESULT_OK, intent)
+
+                        //엑티비티 종료
+                        if (!isFinishing) finish()
                     }
                     LoginViewModel.EVENT_AUTH_WRONG_TOKEN -> {
                         Log.d("Auth fail", "wrong access token")
@@ -188,5 +206,4 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
-
 }

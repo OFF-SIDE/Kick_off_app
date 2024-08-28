@@ -16,7 +16,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="최대 5개 선택가능"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@+id/imageView17"
         app:layout_constraintTop_toBottomOf="@+id/textView31" />
@@ -39,7 +39,7 @@
         android:layout_marginTop="75dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="활동 지역"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_01"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -48,11 +48,11 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-19dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="-14dp"
+        android:layout_marginTop="-17dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="이름 설정"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/imageView16" />
@@ -61,48 +61,47 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="주 종목"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/textView18"
-        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintHorizontal_bias="0.79"
         app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="-19dp"
+        android:layout_marginEnd="-14dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="대표 사진"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView16"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="활동 지역"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/textView18"
-        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
 
     <ImageView
         android:id="@+id/imageView16"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="84dp"
         android:src="@drawable/register_progress_bar_2"
         android:transitionName="register_first_to_second"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,20 +110,20 @@
 
     <ImageView
         android:id="@+id/prev_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="59dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/register_prev_next_button_horizontal_margin"
+        android:layout_marginBottom="@dimen/register_prev_next_button_vertical_margin"
         android:src="@drawable/prev"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="59dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/register_prev_next_button_horizontal_margin"
+        android:layout_marginBottom="@dimen/register_prev_next_button_vertical_margin"
         android:src="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -136,7 +135,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="50dp"
-        android:src="@drawable/line_black"
+        android:src="@drawable/line_gray_02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView33" />

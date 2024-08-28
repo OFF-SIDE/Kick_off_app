@@ -10,9 +10,11 @@
 
     <ImageView
         android:id="@+id/imageView16"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="84dp"
         android:src="@drawable/register_progress_bar_1"
         android:transitionName="register_first_to_second"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,10 +23,10 @@
 
     <ImageView
         android:id="@+id/next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="59dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/register_prev_next_button_horizontal_margin"
+        android:layout_marginBottom="@dimen/register_prev_next_button_vertical_margin"
         android:src="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -36,7 +38,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="50dp"
         android:hint="직접 입력"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -58,11 +60,11 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-19dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="-14dp"
+        android:layout_marginTop="-17dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="이름 설정"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/imageView16" />
@@ -71,15 +73,14 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="활동 지역"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/textView14"
-        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView12" />
 
     <TextView
         android:id="@+id/textView32"
@@ -89,7 +90,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="KICK-OFF에서 사용할 닉네임을 입력해주세요."
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
@@ -98,28 +99,26 @@
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="-19dp"
+        android:layout_marginEnd="-14dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="대표 사진"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView16"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="주 종목"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/textView14"
-        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintHorizontal_bias="0.79"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textView28"
@@ -129,7 +128,7 @@
         android:layout_marginTop="75dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="이름"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_01"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -141,7 +140,7 @@
         android:layout_marginTop="228dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="닉네임"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_01"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -153,7 +152,7 @@
         android:layout_marginTop="-3dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="*"
-        android:textColor="@color/black"
+        android:textColor="@color/secondary_01"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/textView28"
         app:layout_constraintTop_toTopOf="@+id/textView28" />

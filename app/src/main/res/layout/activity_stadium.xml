@@ -37,7 +37,7 @@
                 app:layout_constraintTop_toTopOf="@+id/text_stadium" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/button_scrap"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginEnd="5dp"
@@ -195,6 +195,24 @@
                 app:layout_constraintEnd_toEndOf="@+id/line_2"
                 app:layout_constraintStart_toStartOf="@+id/line_2"
                 app:layout_constraintTop_toBottomOf="@+id/line_2" />
+
+            <Button
+                android:id="@+id/button_scrap_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="즐겨찾기 등록"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_stadium" />
+
+            <Button
+                android:id="@+id/button_scrap_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="즐겨찾기 해제"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_scrap_on" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

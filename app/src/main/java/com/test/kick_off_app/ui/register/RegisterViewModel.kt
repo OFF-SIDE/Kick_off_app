@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.test.kick_off_app.data.CategoryEnum
 import com.test.kick_off_app.data.Constants
+import com.test.kick_off_app.data.FileTypeEnum
 import com.test.kick_off_app.data.LocationEnum
 import com.test.kick_off_app.data.SignupInfo
 import com.test.kick_off_app.data.Stadium
@@ -22,6 +23,7 @@ import com.test.kick_off_app.repository.Repository
 import com.test.kick_off_app.ui.login.LoginViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class RegisterViewModel : BaseViewModel() {
     private val repository = Repository()
@@ -60,13 +62,20 @@ class RegisterViewModel : BaseViewModel() {
     val selectCategoryPos: LiveData<Int?>
         get() = _selectCategoryPos
 
+    // 내부 저장소의 프로필 이미지
     private val _profileImage = MutableLiveData<Uri?>()
     val profileImage: LiveData<Uri?>
         get() = _profileImage
 
+    // 서버의 이미지파일에 접근하는 Url
     private val _profileImageServerUrl = MutableLiveData<String?>()
     val profileImageServerUrl: LiveData<String?>
         get() = _profileImageServerUrl
+
+    // 이미지 업로드 시 발급되는 preSignedUrl
+    private val _preSignedUrl = MutableLiveData<String?>()
+    val preSignedUrl: LiveData<String?>
+        get() = _preSignedUrl
 
     companion object{
         const val EVENT_KAKAO_SIGNUP_SUCCESS = 10001
@@ -74,23 +83,27 @@ class RegisterViewModel : BaseViewModel() {
         const val EVENT_KAKAO_SIGNUP_ALREADY_EXISTS = 10003
         const val EVENT_IMAGE_UPLOAD_SUCCESS = 10004
         const val EVENT_IMAGE_UPLOAD_FAIL = 10005
+        const val EVENT_GET_PRESIGNEDURL_SUCCESS = 10006
+        const val EVENT_GET_PRESIGNEDURL_FAIL = 10007
     }
 
     fun kakaoSignup(signupInfo: SignupInfo) = viewModelScope.launch {
         when(val res = repository.kakaoSignup(signupInfo)){
             is NetworkResponse.Success -> {
                 Log.d("success code", res.body.code.toString())
-                Log.d("success message", res.body.message)
+                Log.d("success message", res.body.message ?: "")
 
                 // 토큰 저장
-                manager.putAccessToken(res.body.data.accessToken)
+                res.body.data?.run{
+                    manager.putAccessToken(accessToken)
+                }
 
                 viewEvent(EVENT_KAKAO_SIGNUP_SUCCESS)
             }
             is NetworkResponse.ServerError -> {
-                res.body?.let{
-                    Log.d("ServerError code", it.errorCode.toString())
-                    Log.d("ServerError message", it.message)
+                res.body?.run{
+                    Log.d("ServerError code", errorCode.toString())
+                    Log.d("ServerError message", message ?: "")
                 }
 
                 if(res.body!!.errorCode == 1002){
@@ -100,25 +113,104 @@ class RegisterViewModel : BaseViewModel() {
             }
             is NetworkResponse.NetworkError -> {
                 // 네트워크 에러시
-                res.body?.let{
-                    Log.d("NetworkError code", it.errorCode.toString())
-                    Log.d("NetworkError message", it.message)
+                res.body?.run{
+                    Log.d("NetworkError code", errorCode.toString())
+                    Log.d("NetworkError message", message ?: "")
                 }
             }
             is NetworkResponse.UnknownError -> {
                 // 언노운 에러시
-                res.body?.let{
-                    Log.d("UnknownError code", it.errorCode.toString())
-                    Log.d("UnknownError message", it.message)
+                res.body?.run{
+                    Log.d("UnknownError code", errorCode.toString())
+                    Log.d("UnknownError message", message ?: "")
                 }
             }
         }
     }
 
-    fun uploadImage(image: MultipartBody.Part) = viewModelScope.launch {
-        // 이미지 업로드 후 서버 uri를 String으로 받아서 profileImageServerUrl에 저장
+    fun getPreSignedUrl(fileType: FileTypeEnum, fileName: String) = viewModelScope.launch {
+        // 이미지를 업로드할 preSignedUrl 얻기
         Log.e("image upload", "t")
-        viewEvent(EVENT_IMAGE_UPLOAD_SUCCESS)
+        when(val res = repository.getPreSignedUrl(fileType, fileName)){
+            is NetworkResponse.Success -> {
+                Log.d("success code", res.body.code.toString())
+                Log.d("success message", res.body.message ?: "")
+
+                var isUrlValid = false
+                // preSignedUrl과 file경로 저장
+                res.body.data?.run {
+                    if(preSignedUrl.isNullOrEmpty() && file.isNullOrEmpty()) {
+                        _preSignedUrl.value = preSignedUrl
+                        _profileImageServerUrl.value = file
+                        isUrlValid = true
+                    }
+                }
+                if(isUrlValid){
+                    viewEvent(EVENT_GET_PRESIGNEDURL_SUCCESS)
+                }
+                else{
+                    viewEvent(EVENT_GET_PRESIGNEDURL_FAIL)
+                }
+            }
+            is NetworkResponse.ServerError -> {
+                res.body?.run{
+                    Log.d("ServerError code", errorCode.toString())
+                    Log.d("ServerError message", message ?: "")
+                }
+
+                viewEvent(EVENT_GET_PRESIGNEDURL_FAIL)
+            }
+            is NetworkResponse.NetworkError -> {
+                // 네트워크 에러시
+                res.body?.run{
+                    Log.d("NetworkError code", errorCode.toString())
+                    Log.d("NetworkError message", message ?: "")
+                }
+                viewEvent(EVENT_GET_PRESIGNEDURL_FAIL)
+            }
+            is NetworkResponse.UnknownError -> {
+                // 언노운 에러시
+                res.body?.run{
+                    Log.d("UnknownError code", errorCode.toString())
+                    Log.d("UnknownError message", message ?: "")
+                }
+                viewEvent(EVENT_GET_PRESIGNEDURL_FAIL)
+            }
+        }
+    }
+
+    fun imageUpload(preSignedUrl: String, image: RequestBody) = viewModelScope.launch {
+        when(val res = repository.imageUpload(preSignedUrl, image)){
+            is NetworkResponse.Success -> {
+                Log.d("ImageUploadApi", "S")
+
+                viewEvent(EVENT_IMAGE_UPLOAD_SUCCESS)
+            }
+            is NetworkResponse.ServerError -> {
+                res.body?.run{
+                    Log.d("ServerError code", errorCode.toString())
+                    Log.d("ServerError message", message ?: "")
+                }
+
+                viewEvent(EVENT_IMAGE_UPLOAD_FAIL)
+            }
+            is NetworkResponse.NetworkError -> {
+                // 네트워크 에러시
+                res.body?.run{
+                    Log.d("NetworkError code", errorCode.toString())
+                    Log.d("NetworkError message", message ?: "")
+                }
+                viewEvent(EVENT_IMAGE_UPLOAD_FAIL)
+            }
+            is NetworkResponse.UnknownError -> {
+                // 언노운 에러시
+                res.body?.run{
+                    Log.d("UnknownError code", errorCode.toString())
+                    Log.d("UnknownError message", message ?: "")
+                }
+                viewEvent(EVENT_IMAGE_UPLOAD_FAIL)
+            }
+        }
     }
 
     fun updateId(newId: Long){
@@ -215,4 +307,6 @@ class RegisterViewModel : BaseViewModel() {
     fun updateProfileImage(image: Uri?){
         _profileImage.value = image
     }
+
+
 }

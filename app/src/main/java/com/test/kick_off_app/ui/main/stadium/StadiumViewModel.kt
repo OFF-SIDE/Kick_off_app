@@ -26,11 +26,16 @@ class StadiumViewModel : BaseViewModel() {
     val selectedLocations: LiveData<String>
         get() = _selectedLocations
 
+    companion object {
+        const val EVENT_INVALID_LOCATION = 10001
+        const val EVENT_WRONG_TOKEN = 10002
+    }
+
     fun getStadium(locations: String?, category: String?) = viewModelScope.launch {
         when(val res = repository.getStadium(locations, category)){
             is NetworkResponse.Success -> {
                 // 성공시
-                Log.d("success code getStadium", res.body.code.toString())
+                Log.d("success code", res.body.code.toString())
                 Log.d("success message", res.body.message ?: "")
                 Log.d("locations", locations ?: "")
                 Log.d("category", category ?: "")
@@ -42,20 +47,26 @@ class StadiumViewModel : BaseViewModel() {
                 // 서버 에러시
                 res.body?.let{
                     Log.d("ServerError code", it.errorCode.toString())
-                    Log.d("ServerError message", it.message)
+                    Log.d("ServerError message", it.message ?: "")
                 }
 
 
-                if(res.body!!.errorCode == 1001){
-                    //유저가 존재하지 않을 때
-                    viewEvent(LoginViewModel.EVENT_KAKAO_LOGIN_NO_USER)
+                when(val errorCode = res.body!!.errorCode){
+                    0 -> {
+                        // location 누락 시
+                        viewEvent(EVENT_INVALID_LOCATION)
+                    }
+                    1, 2, 3 -> {
+                        // 토큰 문제
+                        viewEvent(EVENT_WRONG_TOKEN)
+                    }
                 }
             }
             is NetworkResponse.NetworkError -> {
                 // 네트워크 에러시
                 res.body?.let{
                     Log.d("NetworkError code", it.errorCode.toString())
-                    Log.d("NetworkError message", it.message)
+                    Log.d("NetworkError message", it.message ?: "")
                 }
 
             }
@@ -63,7 +74,7 @@ class StadiumViewModel : BaseViewModel() {
                 // 언노운 에러시
                 res.body?.let{
                     Log.d("UnknownError code", it.errorCode.toString())
-                    Log.d("UnknownError message", it.message)
+                    Log.d("UnknownError message", it.message ?: "")
                 }
 
             }

@@ -14,7 +14,7 @@
         android:fontFamily="@font/pretendard_black"
         android:gravity="center"
         android:text="KICK-OFF"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_01"
         android:textSize="27sp"
         android:transitionName="titleTran"
         app:layout_constraintBottom_toBottomOf="@+id/image_logo"
@@ -30,7 +30,7 @@
         android:transitionName="imageTran"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_1" />
+        app:srcCompat="@drawable/logo" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_register"

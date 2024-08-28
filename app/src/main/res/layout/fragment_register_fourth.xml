@@ -9,6 +9,28 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="JPG, PNG (80*60, 최대 -MB)"
+        android:textColor="@color/gray_01"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView22"
+        app:layout_constraintTop_toTopOf="@+id/imageView22" />
+
+    <ImageView
+        android:id="@+id/imageView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:src="@drawable/rightwards_arrow"
+        app:layout_constraintStart_toStartOf="@+id/button_load_image"
+        app:layout_constraintTop_toBottomOf="@+id/button_load_image" />
+
+    <TextView
         android:id="@+id/textView36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +38,7 @@
         android:layout_marginTop="75dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="대표 사진"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_01"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24" />
@@ -28,7 +50,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="50dp"
-        android:src="@drawable/line_black"
+        android:src="@drawable/line_gray_02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
@@ -37,11 +59,11 @@
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-19dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="-14dp"
+        android:layout_marginTop="-17dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="이름 설정"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/imageView16" />
@@ -50,48 +72,47 @@
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="주 종목"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/textView26"
-        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintHorizontal_bias="0.79"
         app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView27" />
 
     <TextView
         android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="-19dp"
+        android:layout_marginEnd="-14dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="대표 사진"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView16"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView25" />
 
     <TextView
         android:id="@+id/textView27"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="활동 지역"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/textView26"
-        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toTopOf="@+id/textView24" />
 
     <ImageView
         android:id="@+id/imageView16"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="84dp"
         android:src="@drawable/register_progress_bar_4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,22 +120,22 @@
 
     <ImageView
         android:id="@+id/prev_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="59dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/register_prev_next_button_horizontal_margin"
+        android:layout_marginBottom="@dimen/register_prev_next_button_vertical_margin"
         android:src="@drawable/prev"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="59dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/register_prev_next_button_horizontal_margin"
+        android:layout_marginBottom="@dimen/register_prev_next_button_vertical_margin"
+        android:src="@drawable/button_check"
         android:textSize="15sp"
-        android:src="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -128,9 +149,9 @@
         android:background="@drawable/border_idpw_bar"
         android:fontFamily="@font/pretendard_semibold"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp"
-        android:text="JPG, PNG (규격 80*60)"
-        android:textColor="@color/black"
+        android:paddingVertical="5dp"
+        android:text="파일을 첨부해 주세요."
+        android:textColor="@color/gray_01"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,7 +182,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="15dp"
         android:text="회원가입 완료!"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_01"
         app:layout_constraintBottom_toTopOf="@+id/next_button"
         app:layout_constraintEnd_toEndOf="@+id/next_button" />
 

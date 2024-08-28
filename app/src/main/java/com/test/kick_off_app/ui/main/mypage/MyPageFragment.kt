@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
 import com.test.kick_off_app.LoginActivity
 import com.test.kick_off_app.ScrapActivity
@@ -17,37 +18,24 @@ import com.test.kick_off_app.functions.showToast
 class MyPageFragment : Fragment() {
 
     private var _binding: FragmentMypageBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var viewModel: MyPageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val mypageViewModel =
-            ViewModelProvider(this).get(MyPageViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MyPageViewModel::class.java)
 
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        /*
-        val textView: TextView = binding.textMypage
-        mypageViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
-         */
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val myPageFragment =
-            ViewModelProvider(this).get(MyPageViewModel::class.java)
 
         val manager: SharedPrefManager by lazy {
             SharedPrefManager.getInstance()
@@ -82,7 +70,6 @@ class MyPageFragment : Fragment() {
             }
         }
 
-
         // edit 버튼
         binding.buttonEditMypage.setOnClickListener {
             it.isSelected = !it.isSelected
@@ -104,12 +91,17 @@ class MyPageFragment : Fragment() {
                 binding.textLocation.text = binding.textLocationEdit.text.toString()
                 binding.textLocation.visibility = View.VISIBLE
             }
-
         }
 
         binding.constraintLayoutScrap.setOnClickListener {
             val intent = Intent(requireActivity(), ScrapActivity::class.java)
             startActivity(intent)
+        }
+
+        manager.getProfileImage()?.let{uri ->
+            Glide.with(this)
+                .load(uri)
+                .into(binding.imageProfile)
         }
     }
 

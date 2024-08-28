@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,20 +14,16 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.test.kick_off_app.MainActivity
 import com.test.kick_off_app.R
+import com.test.kick_off_app.data.FileTypeEnum
 import com.test.kick_off_app.databinding.FragmentRegisterFourthBinding
+import com.test.kick_off_app.functions.SharedPrefManager
+import com.test.kick_off_app.functions.getRealPathFromURI
+import com.test.kick_off_app.functions.getRequestBodyFromUri
 import com.test.kick_off_app.functions.showToast
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 
@@ -46,6 +43,10 @@ class RegisterFourthFragment : Fragment() {
     private lateinit var viewModel: RegisterViewModel
 
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
+
+    val manager: SharedPrefManager by lazy {
+        SharedPrefManager.getInstance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +76,7 @@ class RegisterFourthFragment : Fragment() {
         // 다음 버튼(회원가입 완료)
         binding.nextButton.setOnClickListener {
             // 이미지 업로드
-            uploadImage()
+            getPreSignedUrl()
         }
 
         // 이미지 불러오기 버튼
@@ -109,16 +110,31 @@ class RegisterFourthFragment : Fragment() {
                 when(actualEvent) {
                     RegisterViewModel.EVENT_IMAGE_UPLOAD_SUCCESS -> {
                         // 이미지 업로드 성공 시
+                        viewModel.profileImage.value?.run{
+                            manager.setProfileImage(this)
+                        }
+
                         mNextButtonClickListener.onRegisterButtonClick()
                     }
                     RegisterViewModel.EVENT_IMAGE_UPLOAD_FAIL -> {
                         // 이미지 업로드 실패 시
                         requireActivity().showToast("이미지 업로드 실패")
                     }
+                    RegisterViewModel.EVENT_GET_PRESIGNEDURL_SUCCESS -> {
+                        // preSignedUrl을 통해 이미지 업로드 api 호출
+                        viewModel.profileImage.value?.let { uri ->
+                            val requestBody = getRequestBodyFromUri(requireActivity(), uri)
+
+                            if(requestBody != null){
+                                viewModel.preSignedUrl.value?.let{preSignedUrl ->
+                                    viewModel.imageUpload(preSignedUrl, requestBody)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
-
         return binding.root
     }
 
@@ -148,46 +164,27 @@ class RegisterFourthFragment : Fragment() {
         callback.remove()
     }
 
-    private fun uploadImage() {
+    private fun getPreSignedUrl() {
         if(viewModel.profileImage.value == null){
             requireActivity().showToast("사진을 선택하세요.")
         }
         viewModel.profileImage.value?.let { uri ->
-            // 안되면 getURI 옛날 걸로
-            val path = getRealPathFromURI(uri)
+            val path = getRealPathFromURI(requireActivity(), uri)
             if(path.isEmpty()){
+                requireActivity().showToast("사진의 경로가 잘못되었습니다.")
                 return
             }
             val file = File(path)
-            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-            val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-            viewModel.uploadImage(body)
-        }
-    }
+            Log.d("profile file name", file.name)
 
-    // URI에서 실제 파일 경로를 얻는 함수
-    private fun getRealPathFromURI(uri: Uri): String {
-
-        var path = ""
-        val cursor = context?.contentResolver?.query(uri, null, null, null, null)
-        /*
-        if (cursor != null) {
-            cursor.moveToFirst()
-            val index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-            path = cursor.getString(index)
-            cursor.close()
-        }
-         */
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val index = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-                if (index != -1) {
-                    path = it.getString(index)
-                }
+            manager.getUserInfo()?.id.let {id ->
+                // 파일 이름 : "profile/${유저id}"
+                viewModel.getPreSignedUrl(FileTypeEnum.PROFILE, "profile/"+id.toString())
             }
         }
-        return path
     }
+
+
 
 }

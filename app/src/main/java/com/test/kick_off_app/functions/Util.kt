@@ -2,17 +2,23 @@ package com.test.kick_off_app.functions
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.kakao.sdk.user.model.User
 import com.test.kick_off_app.data.UserInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.OutputStream
 import java.net.URL
 import java.io.InputStream
 import java.io.BufferedInputStream
+import java.io.File
 import java.io.FileOutputStream
 
 fun Context.showToast(msg: String) {
@@ -109,6 +115,18 @@ class SharedPrefManager private constructor(context: Context) {
             .apply()
     }
 
+    fun getProfileImage(): Uri?{
+        val uriString = prefs.getString("profile_image", null)
+        return if(uriString != null) Uri.parse(uriString) else null
+
+    }
+
+    fun setProfileImage(profileImage: Uri){
+        prefs.edit()
+            .putString("profile_image", profileImage.toString())
+            .apply()
+    }
+
     companion object {
         private lateinit var instance: SharedPrefManager
         fun init(context: Context){
@@ -118,4 +136,41 @@ class SharedPrefManager private constructor(context: Context) {
             return instance
         }
     }
+}
+
+fun getRequestBodyFromUri(context: Context, uri: Uri): RequestBody?{
+    val path = getRealPathFromURI(context, uri)
+    if(path.isEmpty()){
+        return null
+    }
+    val file = File(path)
+    val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+    //val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
+    return requestFile
+}
+
+
+// URI에서 실제 파일 경로를 얻는 함수
+fun getRealPathFromURI(context: Context, uri: Uri): String {
+
+    var path = ""
+    val cursor = context?.contentResolver?.query(uri, null, null, null, null)
+    /*
+    if (cursor != null) {
+        cursor.moveToFirst()
+        val index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+        path = cursor.getString(index)
+        cursor.close()
+    }
+     */
+    cursor?.use {
+        if (it.moveToFirst()) {
+            val index = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            if (index != -1) {
+                path = it.getString(index)
+            }
+        }
+    }
+    return path
 }

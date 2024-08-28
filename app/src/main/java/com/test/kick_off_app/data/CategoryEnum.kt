@@ -16,6 +16,10 @@ enum class StatusEnum {
     진행중, 예약중, 마감
 }
 
+enum class FileTypeEnum {
+    PROFILE, STADIUM, REFEREE
+}
+
 fun getCategory(i: CategoryEnum): String{
     return i.name
 }

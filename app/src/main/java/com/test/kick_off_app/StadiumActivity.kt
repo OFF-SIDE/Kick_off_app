@@ -4,10 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.test.kick_off_app.databinding.ActivityStadiumBinding
+import com.test.kick_off_app.functions.showToast
 import com.test.kick_off_app.network.GlideApp
 import com.test.kick_off_app.ui.main.stadium.StadiumDetailViewModel
 import com.test.kick_off_app.ui.main.stadium.StadiumInfoAdapter
@@ -22,10 +24,16 @@ class StadiumActivity : AppCompatActivity() {
 
         val currentStadiumId = intent.getIntExtra("stadiumId", -1)
 
-        val stadiumDetailViewModel = ViewModelProvider(this).get(StadiumDetailViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(StadiumDetailViewModel::class.java)
 
         val recyclerView = binding.rvStadiumInfo
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        if(currentStadiumId == -1){
+            // 잘못된 stadiumId
+            Log.e("stadiumId", "invalid")
+            finish()
+        }
 
         // rv adapter
         stadiumInfoAdapter = StadiumInfoAdapter { link ->
@@ -37,9 +45,9 @@ class StadiumActivity : AppCompatActivity() {
         recyclerView.stopNestedScroll()
 
         // get response from api
-        stadiumDetailViewModel.getStadiumDetail(currentStadiumId, 1)
+        viewModel.getStadiumDetail(currentStadiumId)
 
-        stadiumDetailViewModel.result.observe(this){stadiumDetail ->
+        viewModel.result.observe(this){stadiumDetail ->
             binding.textStadium.setText(stadiumDetail.stadium.name)
             binding.textAddress.setText(stadiumDetail.stadium.location)
             binding.textPhone.setText(stadiumDetail.stadium.contactPhone)
@@ -53,6 +61,35 @@ class StadiumActivity : AppCompatActivity() {
 
             stadiumInfoAdapter.setList(stadiumDetail.stadiumInfoList)
             stadiumInfoAdapter.notifyDataSetChanged()
+        }
+
+        binding.buttonScrap.setOnClickListener {
+            // 즐겨찾기 버튼
+        }
+
+        viewModel.viewEvent.observe(this) {event ->
+            event?.peekContent()?.let { actualEvent ->
+                when(actualEvent) {
+                    StadiumDetailViewModel.EVENT_STAR_STADIUM -> {
+                        showToast("즐겨찾기로 등록하였습니다.")
+                    }
+                    StadiumDetailViewModel.EVENT_UNSTAR_STADIUM -> {
+                        showToast("즐겨찾기 해제하였습니다.")
+                    }
+                }
+            }
+        }
+
+        binding.buttonScrapOn.setOnClickListener {
+            viewModel.result.value?.stadium?.id?.run{
+                viewModel.starStadium(this)
+            }
+        }
+
+        binding.buttonScrapOff.setOnClickListener {
+            viewModel.result.value?.stadium?.id?.run{
+                viewModel.unStarStadium(this)
+            }
         }
     }
 }

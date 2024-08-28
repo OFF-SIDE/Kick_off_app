@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/image_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="143dp"
+        android:layout_height="143dp"
         android:layout_marginTop="100dp"
         android:transitionName="logoTran"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         android:layout_marginTop="26dp"
         android:fontFamily="@font/pretendard_black"
         android:text="KICK-OFF"
-        android:textColor="@color/black"
+        android:textColor="@color/primary_01"
         android:textSize="27sp"
         android:transitionName="titleTran"
         app:layout_constraintEnd_toEndOf="parent"

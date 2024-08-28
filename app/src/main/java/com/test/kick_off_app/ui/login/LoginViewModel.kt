@@ -38,19 +38,21 @@ class LoginViewModel: BaseViewModel() {
             is NetworkResponse.Success -> {
                 // 성공시
                 Log.d("success code", res.body.code.toString())
-                Log.d("success message", res.body.message)
+                Log.d("success message", res.body.message ?: "")
 
                 // 토큰 저장
-                manager.putAccessToken(res.body.data.accessToken)
+                res.body.data?.run{
+                    manager.putAccessToken(accessToken)
+                }
 
                 viewEvent(EVENT_KAKAO_LOGIN_SUCCESS)
                 //viewEvent(EVENT_KAKAO_LOGIN_NO_USER)
             }
             is NetworkResponse.ServerError -> {
                 // 서버 에러시
-                res.body?.let{
-                    Log.d("ServerError code", it.errorCode.toString())
-                    Log.d("ServerError message", it.message)
+                res.body?.run{
+                    Log.d("ServerError code", errorCode.toString())
+                    Log.d("ServerError message", message ?: "")
                 }
 
 
@@ -61,16 +63,16 @@ class LoginViewModel: BaseViewModel() {
             }
             is NetworkResponse.NetworkError -> {
                 // 네트워크 에러시
-                res.body?.let{
-                    Log.d("NetworkError code", it.errorCode.toString())
-                    Log.d("NetworkError message", it.message)
+                res.body?.run{
+                    Log.d("NetworkError code", errorCode.toString())
+                    Log.d("NetworkError message", message ?: "")
                 }
             }
             is NetworkResponse.UnknownError -> {
                 // 언노운 에러시
-                res.body?.let{
-                    Log.d("UnknownError code", it.errorCode.toString())
-                    Log.d("UnknownError message", it.message)
+                res.body?.run{
+                    Log.d("UnknownError code", errorCode.toString())
+                    Log.d("UnknownError message", message ?: "")
                 }
             }
         }
@@ -79,33 +81,41 @@ class LoginViewModel: BaseViewModel() {
     fun auth() = viewModelScope.launch {
         when(val res = repository.auth()){
             is NetworkResponse.Success -> {
-                Log.d("id", res.body!!.data.id.toString())
-                Log.d("name", res.body!!.data.name.toString())
-                Log.d("nickname", res.body!!.data.nickname.toString())
-                Log.d("location", res.body!!.data.location.toString())
-                Log.d("category", res.body!!.data.category.toString())
+                res.body.data?.run{
+                    Log.d("id", id.toString())
+                    Log.d("name", name.toString())
+                    Log.d("nickname", nickname.toString())
+                    Log.d("location", location.toString())
+                    Log.d("category", category.toString())
 
-
-                manager.putUserInfo(res.body!!.data)
+                    manager.putUserInfo(this)
+                }
 
                 viewEvent(EVENT_AUTH_SUCCESS)
             }
             is NetworkResponse.ServerError -> {
                 // 서버 에러시
-                Log.e("ServerError code", res.body!!.errorCode.toString())
-                Log.e("ServerError message", res.body!!.message)
+                res.body?.run{
+                    Log.e("ServerError code", errorCode.toString())
+                    Log.e("ServerError message", message ?: "")
+                }
+
 
                 viewEvent(EVENT_AUTH_WRONG_TOKEN)
             }
             is NetworkResponse.NetworkError -> {
                 // 네트워크 에러시
-                Log.e("NetworkError code", res.body!!.errorCode.toString())
-                Log.e("NetworkError message", res.body!!.message)
+                res.body?.run{
+                    Log.e("NetworkError code", errorCode.toString())
+                    Log.e("NetworkError message", message ?: "")
+                }
             }
             is NetworkResponse.UnknownError -> {
                 // 언노운 에러시
-                Log.e("UnknownError code", res.body!!.errorCode.toString())
-                Log.e("UnknownError message", res.body!!.message)
+                res.body?.run{
+                    Log.e("UnknownError code", errorCode.toString())
+                    Log.e("UnknownError message", message ?: "")
+                }
             }
         }
     }
