@@ -4,6 +4,7 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.test.kick_off_app.data.FileData
 import com.test.kick_off_app.data.FileTypeEnum
 import com.test.kick_off_app.data.FileUploadRequest
+import com.test.kick_off_app.data.Referee
 import com.test.kick_off_app.data.Response
 import com.test.kick_off_app.data.SignupInfo
 import com.test.kick_off_app.data.Stadium
@@ -72,7 +73,7 @@ interface GetStarredStadiumApi{
 }
 
 // 구장 즐겨찾기 추가
-interface  StarStadiumApi{
+interface StarStadiumApi{
     @POST("stadium/{stadiumId}/star")
     suspend fun starStadium(
         @Path("stadiumId") stadiumId: Int
@@ -80,9 +81,23 @@ interface  StarStadiumApi{
 }
 
 // 구장 즐겨찾기 해제
-interface  UnStarStadiumApi{
+interface UnstarStadiumApi{
     @POST("stadium/{stadiumId}/unstar")
     suspend fun unStarStadium(
         @Path("stadiumId") stadiumId: Int
     ): NetworkResponse<SuccessfulResponse<Unit>, ErrorResponse>
+}
+
+interface GetStarredRefereeApi{
+    @POST("referee/star")
+    suspend fun getStarredReferee(
+        @Query("isHiring") isHiring: Boolean
+    ): NetworkResponse<SuccessfulResponse<List<Referee>>, ErrorResponse>
+}
+
+interface GetMyRefereeApi{
+    @GET("referee/me")
+    suspend fun getMyReferee(
+        @Query("isHiring") isHiring: Boolean
+    ): NetworkResponse<SuccessfulResponse<List<Referee>>, ErrorResponse>
 }

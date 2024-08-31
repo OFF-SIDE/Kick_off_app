@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.mypage.scrap.ScrapRefereeApplicationFragment">
+    tools:context=".ui.main.mypage.scrap.ScrapStardiumFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_referee"
+            android:id="@+id/rv_stadium"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -26,5 +26,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.test.kick_off_app.ui.main.mypage.scrap
+package com.test.kick_off_app.ui.main.mypage.myposts
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,23 +11,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.kick_off_app.R
 import com.test.kick_off_app.StadiumActivity
-import com.test.kick_off_app.databinding.FragmentScrapStardiumBinding
-import com.test.kick_off_app.databinding.FragmentStadiumBinding
+import com.test.kick_off_app.databinding.FragmentMypostsStardiumBinding
 import com.test.kick_off_app.functions.SharedPrefManager
 import com.test.kick_off_app.ui.main.stadium.StadiumAdapter
 
-class ScrapStardiumFragment : Fragment() {
+class MypostsStardiumFragment : Fragment() {
     val manager: SharedPrefManager by lazy {
         SharedPrefManager.getInstance()
     }
 
-    private var _binding: FragmentScrapStardiumBinding? = null
+    private var _binding: FragmentMypostsStardiumBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var stadiumAdapter: StadiumAdapter
-    private lateinit var viewModel: ScrapStardiumViewModel
+    private lateinit var viewModel: MypostsStardiumViewModel
 
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
         when (key) {
@@ -43,9 +41,9 @@ class ScrapStardiumFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentScrapStardiumBinding.inflate(inflater, container, false)
+        _binding = FragmentMypostsStardiumBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProvider(this).get(ScrapStardiumViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MypostsStardiumViewModel::class.java)
 
         return binding.root
     }

@@ -1,29 +1,35 @@
-package com.test.kick_off_app.ui.main.mypage.scrap
+package com.test.kick_off_app.ui.main.mypage.myposts
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.kick_off_app.databinding.FragmentScrapRefereeRecruitmentBinding
+import com.test.kick_off_app.R
+import com.test.kick_off_app.StadiumActivity
+import com.test.kick_off_app.databinding.FragmentMypostsRefereeApplicationBinding
+import com.test.kick_off_app.databinding.FragmentScrapRefereeApplicationBinding
+import com.test.kick_off_app.databinding.FragmentScrapStardiumBinding
 import com.test.kick_off_app.functions.SharedPrefManager
+import com.test.kick_off_app.ui.main.mypage.scrap.ScrapRefereeApplicationViewModel
+import com.test.kick_off_app.ui.main.stadium.StadiumAdapter
 
-class ScrapRefereeRecruitmentFragment : Fragment() {
+class MypostsRefereeApplicationFragment : Fragment() {
     val manager: SharedPrefManager by lazy {
         SharedPrefManager.getInstance()
     }
 
-    private var _binding: FragmentScrapRefereeRecruitmentBinding? = null
+    private var _binding: FragmentMypostsRefereeApplicationBinding? = null
     private val binding get() = _binding!!
 
     // todo: 심판 추가 후 주석해제
     //private lateinit var refereeAdapter: RefereeAdapter
-    private lateinit var viewModel: ScrapRefereeRecruitmentViewModel
+    private lateinit var viewModel: MypostsRefereeApplicationViewModel
 
     // todo: 만약에 카테고리로 필터링 된다면 prefListener 추가(구장 참고)
 
@@ -31,9 +37,9 @@ class ScrapRefereeRecruitmentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentScrapRefereeRecruitmentBinding.inflate(inflater, container, false)
+        _binding = FragmentMypostsRefereeApplicationBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProvider(this).get(ScrapRefereeRecruitmentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MypostsRefereeApplicationViewModel::class.java)
 
         return binding.root
     }
@@ -58,10 +64,10 @@ class ScrapRefereeRecruitmentFragment : Fragment() {
         recyclerView.adapter = refereeAdapter
 
         // 즐겨찾기한 심판목록 가져오기
-        viewModel.getStarredReferee(true)
+        viewModel.getMyReferee(false)
 
         binding.swipe.setOnRefreshListener {
-            viewModel.getStarredReferee(true)
+            viewModel.getMyReferee(false)
             binding.swipe.isRefreshing = false
         }
 
@@ -70,6 +76,7 @@ class ScrapRefereeRecruitmentFragment : Fragment() {
             refereeAdapter.notifyDataSetChanged()
         }*/
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
