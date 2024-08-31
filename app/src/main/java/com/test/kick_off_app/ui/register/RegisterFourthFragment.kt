@@ -159,6 +159,7 @@ class RegisterFourthFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
+
     override fun onDetach() {
         super.onDetach()
         callback.remove()
