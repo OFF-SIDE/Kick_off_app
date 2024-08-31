@@ -1,4 +1,4 @@
-package com.test.kick_off_app.ui.main.mypage.scrap
+package com.test.kick_off_app.ui.main.mypage.myposts
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,13 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.test.kick_off_app.data.Referee
-import com.test.kick_off_app.data.Stadium
 import com.test.kick_off_app.functions.BaseViewModel
 import com.test.kick_off_app.repository.Repository
-import com.test.kick_off_app.ui.main.mypage.scrap.ScrapStardiumViewModel.Companion.EVENT_GET_STARRED_STADIUM_FAIL
 import kotlinx.coroutines.launch
 
-class ScrapRefereeApplicationViewModel : BaseViewModel() {
+class MypostsRefereeRecruitmentViewModel : BaseViewModel() {
     private val repository = Repository()
 
     private val _referees = MutableLiveData<List<Referee>>()
@@ -26,8 +24,8 @@ class ScrapRefereeApplicationViewModel : BaseViewModel() {
         const val EVENT_WRONG_TOKEN = 10003
     }
 
-    fun getStarredReferee(isHiring: Boolean) = viewModelScope.launch {
-        when(val res = repository.getStarredReferee(isHiring)){
+    fun getMyReferee(isHiring: Boolean) = viewModelScope.launch {
+        when(val res = repository.getMyReferee(isHiring)){
             is NetworkResponse.Success -> {
                 Log.d("success code", res.body.code.toString())
                 Log.d("success message", res.body.message ?: "")

@@ -70,3 +70,25 @@ data class FileUploadRequest(
     var fileType: FileTypeEnum,
     var fileName: String
 )
+
+data class Referee(
+    @SerializedName("id"          ) var id          : Int?     = null,
+    @SerializedName("userId"      ) var userId      : Int?     = null,
+    @SerializedName("title"       ) var title       : String?  = null,
+    @SerializedName("price"       ) var price       : Int?     = null,
+    @SerializedName("stadiumId"   ) var stadiumId   : Int?     = null,
+    @SerializedName("userStadium" ) var userStadium : String?  = null,
+    @SerializedName("imgLink"     ) var imgLink     : String?  = null,
+    @SerializedName("comment"     ) var comment     : String?  = null,
+    @SerializedName("status"      ) var status      : String?  = null,
+    @SerializedName("isHiring"    ) var isHiring    : Boolean? = null,
+    @SerializedName("category"    ) var category    : String?  = null,
+    @SerializedName("startDate"   ) var startDate   : String?  = null,
+    @SerializedName("endDate"     ) var endDate     : String?  = null,
+    @SerializedName("dateNego"    ) var dateNego    : Boolean? = null,
+    @SerializedName("startTime"   ) var startTime   : Int?     = null,
+    @SerializedName("endTime"     ) var endTime     : Int?     = null,
+    @SerializedName("timeNego"    ) var timeNego    : Boolean? = null,
+    @SerializedName("priceNego"   ) var priceNego   : Boolean? = null,
+    @SerializedName("createdAt"   ) var createdAt   : String?  = null
+)

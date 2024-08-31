@@ -180,7 +180,8 @@ class RegisterFourthFragment : Fragment() {
 
             manager.getUserInfo()?.id.let {id ->
                 // 파일 이름 : "profile/${유저id}"
-                viewModel.getPreSignedUrl(FileTypeEnum.PROFILE, "profile/"+id.toString())
+                //viewModel.getPreSignedUrl(FileTypeEnum.PROFILE, "profile/"+id.toString())
+                mNextButtonClickListener.onRegisterButtonClick()
             }
         }
     }
