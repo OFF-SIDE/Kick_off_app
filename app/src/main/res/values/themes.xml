@@ -32,4 +32,29 @@
     <style name="TabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
     </style>
+
+
+    <style name="BottomNavItemActiveTextStyle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <style name="BottomNavItemInActiveTextStyle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+
+    <!-- Tab Text Style -->
+    <style name="MyTabText">
+        <item name="android:textSize">16sp</item> <!-- 폰트 크기 -->
+        <item name="android:fontFamily">@font/inter_semibold</item> <!-- 폰트 설정 -->
+        <item name="android:textColor">#EDEDED</item> <!-- 기본 텍스트 색상 -->
+    </style>
+
+    <!-- Selected Tab Text Style -->
+    <style name="MyTabTextSelected">
+        <item name="android:textSize">16sp</item> <!-- 선택된 탭 폰트 크기 -->
+        <item name="android:fontFamily">@font/inter_semibold</item> <!-- 선택된 탭 폰트 -->
+        <item name="android:textColor">@color/primary_01</item> <!-- 선택된 탭 텍스트 색상 -->
+    </style>
 </resources>

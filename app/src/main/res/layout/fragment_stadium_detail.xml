@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/star"
+                android:src="@drawable/ic_star_outline"
                 app:layout_constraintBottom_toBottomOf="@+id/text_rating"
                 app:layout_constraintEnd_toStartOf="@+id/text_rating"
                 app:layout_constraintTop_toTopOf="@+id/text_rating"
@@ -83,7 +83,7 @@
                 android:layout_width="@dimen/stadium_detail_icon_width"
                 android:layout_height="@dimen/stadium_detail_icon_height"
                 android:layout_marginTop="40dp"
-                android:src="@drawable/location_icon"
+                android:src="@drawable/ic_location"
                 app:layout_constraintStart_toStartOf="@+id/image_stadium"
                 app:layout_constraintTop_toBottomOf="@+id/image_stadium" />
 

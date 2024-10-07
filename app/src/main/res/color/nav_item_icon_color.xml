@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 활성화된 아이템: 투명한 틴트 적용으로 원래 색상 유지 -->
+    <item android:state_checked="true" android:color = "@null" />
+    <!-- 비활성화된 아이템: 회색 틴트 적용 -->
+    <item android:state_checked="false" android:color="@color/gray_01" />
+</selector>

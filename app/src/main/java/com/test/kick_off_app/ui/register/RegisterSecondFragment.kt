@@ -43,7 +43,9 @@ class RegisterSecondFragment : Fragment() {
         // Inflate the layout for this fragment
 
         binding.prevButton.setOnClickListener {
-            findNavController().navigate(R.id.action_registerSecondFragment_to_registerFirstFragment)
+            //findNavController().navigate(R.id.action_registerSecondFragment_to_registerFirstFragment)
+            // 이전 프래그먼트로
+            findNavController().popBackStack()
         }
 
         binding.nextButton.setOnClickListener {
@@ -88,7 +90,8 @@ class RegisterSecondFragment : Fragment() {
         super.onAttach(context)
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_registerSecondFragment_to_registerFirstFragment)
+                // 이전 프래그먼트로
+                findNavController().popBackStack()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)

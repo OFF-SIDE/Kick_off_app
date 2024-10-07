@@ -41,11 +41,11 @@ class MyPageFragment : Fragment() {
             SharedPrefManager.getInstance()
         }
 
-        binding.textCategoryGuide.setOnClickListener {
+        binding.imageProfile.setOnClickListener {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
         }
-        binding.imageProfile.setOnClickListener {
+        binding.textCategoryGuide.setOnClickListener {
             // 연결 끊기
             UserApiClient.instance.unlink { error ->
                 if (error != null) {
@@ -58,7 +58,7 @@ class MyPageFragment : Fragment() {
             manager.putAccessToken("")
         }
 
-        binding.constraintLayoutInfo.setOnClickListener {
+        binding.textLocationGuide.setOnClickListener {
             // 로그아웃
             UserApiClient.instance.logout { error ->
                 if (error != null) {
@@ -93,10 +93,34 @@ class MyPageFragment : Fragment() {
             }
         }
 
+        // 나의 스크랩
         binding.constraintLayoutScrap.setOnClickListener {
             val intent = Intent(requireActivity(), ScrapActivity::class.java)
             startActivity(intent)
         }
+
+        // 내가 쓴 글
+        binding.constraintLayoutMypost.setOnClickListener {
+
+        }
+
+        // 내가 쓴 댓글
+        binding.constraintLayoutMycomment.setOnClickListener {
+            val intent = Intent(requireActivity(), ScrapActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 공지사항
+        binding.constraintLayoutNotice.setOnClickListener {
+
+        }
+
+        // 고객센터
+        binding.constraintLayoutCs.setOnClickListener {
+
+        }
+
+
 
         manager.getProfileImage()?.let{uri ->
             Glide.with(this)

@@ -19,9 +19,11 @@
                 android:id="@+id/image_profile"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="52dp"
-                android:src="@drawable/circle"
+                android:src="@drawable/ic_launcher_foreground"
+                app:civ_border_color="@color/gray_02"
+                app:civ_border_width="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,10 +32,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/inter_semibold"
                 android:text="홍길동"
-                android:textSize="15sp"
-                android:textStyle="bold"
+                android:textColor="@color/gray_01"
+                android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/image_profile"
                 app:layout_constraintTop_toTopOf="@+id/image_profile" />
 
@@ -43,7 +46,7 @@
                 android:layout_height="24dp"
                 android:layout_marginTop="-15dp"
                 android:layout_marginEnd="38dp"
-                android:src="@drawable/toggle_button_edit"
+                android:src="@drawable/ic_setting"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/text_name" />
 
@@ -51,9 +54,12 @@
                 android:id="@+id/text_setting_guide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="51dp"
-                android:layout_marginTop="60dp"
-                android:text="설정"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="75dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="미리보기"
+                android:textColor="@color/gray_01"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_profile" />
 
@@ -61,81 +67,55 @@
                 android:id="@+id/text_etc_guide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="66dp"
+                android:layout_marginTop="46dp"
+                android:fontFamily="@font/pretendard_bold"
                 android:text="기타"
+                android:textColor="@color/gray_01"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/text_setting_guide"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_story" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_mycomment" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_serviceCenter"
+                android:id="@+id/constraintLayout_cs"
                 android:layout_width="0dp"
-                android:layout_height="49dp"
+                android:layout_height="@dimen/mypage_item_height"
                 android:background="@drawable/border_bottom"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_suggest"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout_suggest"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_suggest">
-
-                <ImageView
-                    android:id="@+id/image_serviceCenter"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="15dp"
-                    android:src="@drawable/circle"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/text_serviceCenter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="19dp"
-                    android:text="고객센터"
-                    android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_serviceCenter"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_suggest"
-                android:layout_width="0dp"
-                android:layout_height="49dp"
-                android:background="@drawable/border_bottom"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_announce"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout_announce"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_announce">
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_notice"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout_notice"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_notice">
 
                 <ImageView
                     android:id="@+id/image_suggest"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="15dp"
-                    android:src="@drawable/circle"
+                    android:src="@drawable/ic_cs"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/text_suggest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="19dp"
-                    android:text="유저의 소리"
-                    android:textSize="17sp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:text="고객센터"
+                    android:textColor="@color/gray_01"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_suggest"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_announce"
+                android:id="@+id/constraintLayout_notice"
                 android:layout_width="0dp"
-                android:layout_height="49dp"
+                android:layout_height="@dimen/mypage_item_height"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/border_bottom"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_story"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout_story"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_mycomment"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout_mycomment"
                 app:layout_constraintTop_toBottomOf="@+id/text_etc_guide">
 
                 <ImageView
@@ -143,100 +123,73 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="15dp"
-                    android:src="@drawable/circle"
+                    android:src="@drawable/ic_notice"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/text_announce"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="19dp"
+                    android:fontFamily="@font/pretendard_bold"
                     android:text="공지사항"
-                    android:textSize="17sp"
+                    android:textColor="@color/gray_01"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_announce"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_story"
+                android:id="@+id/constraintLayout_mycomment"
                 android:layout_width="0dp"
-                android:layout_height="49dp"
+                android:layout_height="@dimen/mypage_item_height"
                 android:background="@drawable/border_bottom"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_history"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout_history"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_history">
-
-                <ImageView
-                    android:id="@+id/image_story"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="15dp"
-                    android:src="@drawable/circle"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/text_story"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="19dp"
-                    android:text="내가 쓴 글/댓글"
-                    android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/image_story"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_history"
-                android:layout_width="0dp"
-                android:layout_height="49dp"
-                android:background="@drawable/border_bottom"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_scrap"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout_scrap"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_scrap">
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_mypost"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout_mypost"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_mypost">
 
                 <ImageView
                     android:id="@+id/image_history"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="15dp"
-                    android:src="@drawable/circle"
+                    android:src="@drawable/ic_my_comment"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/text_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="19dp"
-                    android:text="예약 현황 및 히스토리"
-                    android:textSize="17sp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:text="내가 쓴 댓글"
+                    android:textColor="@color/gray_01"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_history"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_scrap"
+                android:id="@+id/constraintLayout_mypost"
                 android:layout_width="0dp"
-                android:layout_height="49dp"
+                android:layout_height="@dimen/mypage_item_height"
                 android:background="@drawable/border_bottom"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_info"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout_info"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_info">
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout_scrap"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout_scrap"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_scrap">
 
                 <ImageView
                     android:id="@+id/image_scrap"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="15dp"
-                    android:src="@drawable/circle"
+                    android:src="@drawable/ic_my_post"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -246,20 +199,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="19dp"
-                    android:text="스크랩"
-                    android:textSize="17sp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:text="내가 쓴 글"
+                    android:textColor="@color/gray_01"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_scrap"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_info"
+                android:id="@+id/constraintLayout_scrap"
                 android:layout_width="0dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="22dp"
+                android:layout_height="@dimen/mypage_item_height"
+                android:layout_marginStart="42dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="22dp"
+                android:layout_marginEnd="42dp"
                 android:background="@drawable/border_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -270,18 +225,21 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="15dp"
-                    android:src="@drawable/circle"
+                    android:src="@drawable/ic_my_scrap"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/text_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="19dp"
-                    android:text="기본정보"
-                    android:textSize="17sp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:text="스크랩"
+                    android:textColor="@color/gray_01"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_info"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -291,10 +249,11 @@
                 android:id="@+id/text_category_guide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/inter_semibold"
                 android:text="주종목"
-                android:textSize="13sp"
-                android:textStyle="bold"
+                android:textColor="@color/primary_01"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@+id/text_name"
                 app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
@@ -302,10 +261,11 @@
                 android:id="@+id/text_location_guide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_semibold"
                 android:text="활동 지역"
-                android:textSize="13sp"
-                android:textStyle="bold"
+                android:textColor="@color/primary_01"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@+id/text_category_guide"
                 app:layout_constraintTop_toBottomOf="@+id/text_category_guide" />
 
@@ -315,7 +275,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:hint="예시) 축구, 풋살"
-                android:textSize="13sp"
+                android:textSize="15sp"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/gray_01"
                 android:paddingHorizontal="7dp"
                 android:paddingVertical="5dp"
 
@@ -328,7 +290,9 @@
                 android:layout_width="@dimen/mypage_profile_info_width"
                 android:layout_height="wrap_content"
                 android:hint="예시) 마포구"
-                android:textSize="13sp"
+                android:textSize="15sp"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/gray_01"
                 android:paddingHorizontal="7dp"
                 android:paddingVertical="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/text_location_guide"

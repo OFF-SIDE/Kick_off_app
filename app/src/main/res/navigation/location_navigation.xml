@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_location_bar" >
         <action
             android:id="@+id/action_locationBarFragment_to_locationFragment"
-            app:destination="@id/locationFragment" />
+            app:destination="@id/locationFragment"
+            app:enterAnim="@anim/expand_anim"/>
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
@@ -21,6 +22,7 @@
         tools:layout="@layout/fragment_location" >
         <action
             android:id="@+id/action_locationFragment_to_locationBarFragment"
-            app:destination="@id/locationBarFragment" />
+            app:destination="@id/locationBarFragment"
+            />
     </fragment>
 </navigation>

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Kick_off_app</string>
-    <string name="title_stadium">Stadium</string>
-    <string name="title_referee">Referee</string>
-    <string name="title_matching">Matching</string>
-    <string name="title_community">Community</string>
-    <string name="title_mypage">MyPage</string>
+    <string name="title_stadium">구장</string>
+    <string name="title_referee">심판</string>
+    <string name="title_matching">매칭</string>
+    <string name="title_community">커뮤니티</string>
+    <string name="title_mypage">마이페이지</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="native_app_key">37cc79f30e80e40306512fd1b4241978</string>

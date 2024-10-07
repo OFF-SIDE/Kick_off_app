@@ -1,5 +1,6 @@
 package com.test.kick_off_app.ui.location
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -20,10 +21,12 @@ class LocationAdapter(private val onClick: (Int) -> Unit) : RecyclerView.Adapter
             if (locations[position]){
                 // 활성
                 binding.buttonLocation.setBackgroundResource(R.drawable.location_selected_button)
+                binding.textLocation.setTextColor(Color.parseColor("#FFFFFF"))
             }
             else{
                 // 비활성
                 binding.buttonLocation.setBackgroundResource(R.drawable.location_button)
+                binding.textLocation.setTextColor(Color.parseColor("#626262"))
             }
             binding.root.setOnClickListener {
                 // RecyclerView item click event

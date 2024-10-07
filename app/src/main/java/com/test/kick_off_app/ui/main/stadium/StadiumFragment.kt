@@ -174,6 +174,9 @@ class StadiumFragment : Fragment() {
                 Log.e("locationBar", "22")
             }
         }
+
+        // 임시 채팅 버튼
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

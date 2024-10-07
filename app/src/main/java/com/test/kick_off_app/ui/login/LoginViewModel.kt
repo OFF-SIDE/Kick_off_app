@@ -45,8 +45,8 @@ class LoginViewModel: BaseViewModel() {
                     manager.putAccessToken(accessToken)
                 }
 
-                viewEvent(EVENT_KAKAO_LOGIN_SUCCESS)
-                //viewEvent(EVENT_KAKAO_LOGIN_NO_USER)
+                //viewEvent(EVENT_KAKAO_LOGIN_SUCCESS)
+                viewEvent(EVENT_KAKAO_LOGIN_NO_USER)
             }
             is NetworkResponse.ServerError -> {
                 // 서버 에러시

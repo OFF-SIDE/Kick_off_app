@@ -70,6 +70,8 @@ class MainActivity : AppCompatActivity() {
          */
         navView.setupWithNavController(navController)
 
+        navView.itemIconTintList = null
+
         // 권한 동의
         checkPermission()
 

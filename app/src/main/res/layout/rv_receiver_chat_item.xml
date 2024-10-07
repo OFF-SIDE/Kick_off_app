@@ -36,7 +36,7 @@
                 android:background="@drawable/chat_receiver_background"
                 android:breakStrategy="simple"
                 android:ellipsize="end"
-                android:hint="111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                android:hint="11111111"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:paddingHorizontal="5dp"

@@ -5,25 +5,25 @@
 
     <item
         android:id="@+id/navigation_stadium"
-        android:icon="@drawable/ic_stadium_black_24dp"
+        android:icon="@drawable/nav_stadium_button"
         android:title="@string/title_stadium" />
     <item
         android:id="@+id/navigation_referee"
-        android:icon="@drawable/ic_referee_black_24dp"
+        android:icon="@drawable/nav_referee_button"
         android:title="@string/title_referee" />
     <item
         android:id="@+id/navigation_matching"
-        android:icon="@drawable/ic_matching_black_24dp"
+        android:icon="@drawable/nav_matching_button"
         android:title="@string/title_matching" />
 
     <item
         android:id="@+id/navigation_community"
-        android:icon="@drawable/ic_community_black_24dp"
+        android:icon="@drawable/nav_community_button"
         android:title="@string/title_community" />
 
     <item
         android:id="@+id/navigation_mypage"
-        android:icon="@drawable/ic_mypage_black_24dp"
+        android:icon="@drawable/nav_mypage_button"
         android:title="@string/title_mypage" />
 
 </menu>
